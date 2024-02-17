@@ -1,0 +1,41 @@
+.ant-form-item
+	.ant-form-item-label
+	> label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+	display: none;
+}
+.form-label label {
+	color: white !important;
+	margin-top: 0.2rem;
+}
+
+.password-input input {
+	text-align: center;
+}
+.password-input input::placeholder {
+	color: white;
+}
+
+.password-input {
+	background-color: #a5a5a5 !important;
+}
+.password-input:hover,
+.username-input:hover {
+	background-color: #45484c !important;
+}
+
+.username-input:focus,
+.password-input:focus-within {
+	background-color: #45484c !important;
+}
+
+.password-input .ant-input-suffix {
+	display: none;
+}
+
+.signup-password .ant-input-suffix {
+	display: block;
+}
+
+.submit-btn:hover {
+	background-color: #45484c !important;
+}
