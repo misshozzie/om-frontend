@@ -7,10 +7,10 @@ import {
   useNavigate,
   useNavigation,
 } from "react-router-dom";
-import { AuthContext } from "../../../Provider/Authprovider";
-import { validateEmail } from "../../../lib/utils";
-import "../Login/Login.css";
+import { AuthContext } from "../Authprovider";
+import { validateEmail } from "../../../services/utils"
 import SocialLogin from "../SocialLogin/SocialLogin";
+import "../../../index.css";
 
 function SignupForm() {
 //const SignupForm = () => {

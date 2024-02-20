@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Users/Authprovider";
+import OfficematesLogo from "../../assets/officemateLogoNobg.png"; 
 import axios from "axios";
 
 function NavBar() {
@@ -66,7 +67,7 @@ function NavBar() {
                   <summary>MENU</summary>
                   <ul className="p-3 bg-slate-500 rounded-t-none">
                     <li>
-                      <Link to="/calendar">Calender</Link>
+                      <Link to="/calendar">Calendar</Link>
                     </li>
                     <li>
                       <Link to="/Notes">Notes</Link>
@@ -106,8 +107,7 @@ function NavBar() {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost text-xl">
-            LOGO
-          </Link>
+          <img src={OfficematesLogo} alt="officemateLogo" /></Link>
         </div>
         <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal md:px-1">
