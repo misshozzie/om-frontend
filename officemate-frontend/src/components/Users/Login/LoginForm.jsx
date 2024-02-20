@@ -7,17 +7,22 @@ import {
   useNavigate,
   useNavigation,
 } from "react-router-dom";
-import { AuthContext } from "../Authprovider";
-import { validateEmail } from "../../../services/utils";
+import { AuthContext } from "../Authprovider"
+import { validateEmail } from '../../../services/utils';
 import SocialLogin from "../SocialLogin/SocialLogin";
+import { hashDataWithSaltRounds, storeToken } from "../../../util/security";
 import "../Login/LoginStyle.css";
 
-const Login = () => {
+function LoginForm() {
+  //const LoginForm = () => {
   const { googleSignIn, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const navigation = useNavigation();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [allUser, setAllUser] = useState([]);
 
   useEffect(() => {
@@ -40,10 +45,10 @@ const Login = () => {
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post("http://localhost:5000/login", values);
-      const { token,auth } = response.data;
+      const response = await axios.post("http://localhost:3000/login", values);
+      const { token, auth } = response.data;
       localStorage.setItem("token", token);
-      
+
       // Assuming allUser is available in scope
       const foundUser = allUser.find((u) => u.email === values.email);
       setUser(foundUser);
@@ -53,6 +58,38 @@ const Login = () => {
       navigate("/"); // Redirect to home page after successful login
     } catch (error) {
       console.error("Login failed:", error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      // has the password
+      const hashedPassword = hashedPassword(formData.password);
+      //make a copy of formData to avoid directly mutating state
+      const loginDate = { ...formData, password: hashedPassword };
+
+      //Attempt to login
+      const {
+        date: { token, user },
+      } = await axios.post("http://localhost:3000/login", loginData);
+
+      storeToken(token);
+      setUser(user);
+      navigate(from, { replace: tru });
+      setErrorMessage("Login failed. Please check your credentials.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,7 +109,7 @@ const Login = () => {
         };
 
         axios
-          .post("http://localhost:5000/user", saveUser, {
+          .post("http://localhost:3000/user", saveUser, {
             headers: {
               "Content-Type": "application/json",
             },
@@ -135,7 +172,10 @@ const Login = () => {
           >
             <Input
               className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium"
-              placeholder="Enter your username"
+              placeholder="Enter your email"
+              onChange={handleInputChange}
+              value={formData.email} required
+              
             />
           </Form.Item>
           <Form.Item
@@ -152,6 +192,8 @@ const Login = () => {
             <Input.Password
               className="py-2 text-center password-input bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium signup-password"
               placeholder="Enter your password"
+              onChange={handleInputChange}
+              value={formData.password} required
             />
           </Form.Item>
           <div className="flex justify-between items-center sm:ml-20">
@@ -171,6 +213,7 @@ const Login = () => {
             className="rounded-none bg-black px-10 submit-btn"
             type="primary"
             htmlType="submit"
+            onClick={handleInputChange}
           >
             Submit
           </Button>
@@ -183,6 +226,6 @@ const Login = () => {
       </Form>
     </div>
   );
-};
+}
 
-export default Login;
+export default LoginForm;
