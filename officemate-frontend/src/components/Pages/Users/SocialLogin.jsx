@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import googleIcon from "../../../assets/images";
+import googleIcon from "../../../assets/images/google.png";
 import { cn } from "../../../services/utils";
 
 function SocialLogin() {

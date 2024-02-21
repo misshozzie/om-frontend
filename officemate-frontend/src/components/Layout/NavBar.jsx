@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { AuthContext } from "../Users/Authprovider";
-import OfficematesLogo from "../../assets/officemateLogoNobg.png"; 
+import { AuthContext } from "../Pages/Users/Authprovider";
+import OfficematesLogo from "../../assets/images/officemateLogoNobg.png"; 
 import axios from "axios";
 
 function NavBar() {
