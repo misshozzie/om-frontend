@@ -11,7 +11,7 @@ import { AuthContext } from "../Authprovider"
 import { validateEmail } from '../../../../services/utils';
 import SocialLogin from "../SocialLogin";
 import { hashDataWithSaltRounds, storeToken } from "../../../../util/security";
-import "./LoginStyle.css";
+import "../Login/Login.css";
 
 function Login() {
   //const LoginForm = () => {

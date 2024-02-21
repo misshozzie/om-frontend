@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-import AuthProvider from "./components/Users/Authprovider";
-import { AllProvider } from "./components/Context/AllContext";
-import { router } from "./components/Path/Router";
+import { AllProvider } from "./components/Pages/AllContext";
+import { router } from "./components/Paths/Router";
 import "./index.css";
 
 //import AuthProvider from "./Provider/Authprovider";
