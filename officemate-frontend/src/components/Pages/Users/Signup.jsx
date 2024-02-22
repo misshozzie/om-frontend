@@ -1,29 +1,28 @@
-import { Button, Form, Input, message } from "antd";
-import axios from "axios"; // Import axios for making HTTP requests
 import { useContext } from "react";
+import { AuthContext } from "../Users/Authprovider";
+import axios from "axios"; // Import axios for making HTTP requests
 import {
   NavLink,
   useLocation,
   useNavigate,
   useNavigation,
 } from "react-router-dom";
-import { AuthContext } from "./Authprovider";
+import { Button, Form, Input, message } from "antd";
 import { validateEmail } from "../../../services/utils"
-import SocialLogin from "./SocialLogin";
+import SocialLogin from "../Users/SocialLogin";
 import "../../../index.css";
 
 function Signup() {
-//const SignupForm = () => {
   const { googleSignIn, setUser } = useContext(AuthContext);
-  const navigate = useNavigate(); // Import useNavigate hook to redirect after signup
-  const navigation = useNavigation();
+  const navigate = useNavigate();
+  //const navigation = useNavigation();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/";
 
-  if (navigation.state === "loading") {
-    return <progress className="progress w-56"></progress>;
-  }
+  // if (navigation.state === "loading") {
+  //   return <progress className="progress w-56"></progress>;
+  // }
   const onFinish = async (values) => {
     const defaultUser = {
       role: "user",
@@ -81,10 +80,12 @@ function Signup() {
           })
           .catch((error) => {
             console.error("Error posting user data:", error);
+            message.error("Failed to process Google sign-in. Please try again later.");
           });
       })
       .catch((error) => {
         console.error("Google sign-in error:", error.message);
+        message.error("Google sign-in failed. Please try again.");
       });
   };
 
