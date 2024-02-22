@@ -4,9 +4,9 @@ import SignUp from "../Pages/Users/Signup";
 import NavBar from "../Layout/Footer";
 import UpdateProfile from "../Pages/Users/UpdateProfile";
 import Widgets from "../Pages/Widgets"
-//import Converter from "../Pages/";
+import Converter from "../Pages/Converter/Converter";
 import Login from "../Pages/Users/Login/Login";
-//import Calendar from "../Pages/Calendar";
+import Calendar from "../Pages/Calendar";
 import Note from "../Pages/Notes/Note";
 import AddNote from "../Pages/Notes/AddNote";
 import ViewNote from "../Pages/Notes/ViewNote";
@@ -87,4 +87,3 @@ export const router = createBrowserRouter([
   },
 ]);
 
-export default createAppRouter();
