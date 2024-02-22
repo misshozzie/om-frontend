@@ -12,11 +12,11 @@
 	text-align: center;
 }
 .password-input input::placeholder {
-	color: white;
+	color: #9BCDD2;
 }
 
 .password-input {
-	background-color: #a5a5a5 !important;
+	background-color: #FFDEDE !important;
 }
 .password-input:hover,
 .username-input:hover {

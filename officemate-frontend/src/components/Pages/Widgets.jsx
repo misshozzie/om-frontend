@@ -15,7 +15,7 @@ function Widgets() {
             <div className="card card-compact  bg-slate-700 text-white shadow-2xl">
               <figure>
                 <Lottie
-                  animationData={calender}
+                  animationData={calendar}
                   loop={true}
                   // style={{ width: "453px", height: "268px" }}
                   id="card_Style"

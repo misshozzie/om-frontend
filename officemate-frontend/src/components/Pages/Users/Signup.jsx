@@ -109,7 +109,7 @@ function Signup() {
         autoComplete="off"
         className="w-full"
       >
-        <div className="bg-black w-full py-5 px-14">
+        <div className="bg-customBlue w-full py-5 px-14">
           <h2 className="uppercase text-white text-center mb-4 font-medium text-xl">
             Signup
           </h2>
@@ -125,7 +125,7 @@ function Signup() {
             ]}
           >
             <Input
-              className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium"
+              className="py-2 text-center username-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium"
               placeholder="Enter your username"
             />
           </Form.Item>
@@ -151,7 +151,7 @@ function Signup() {
             ]}
           >
             <Input
-              className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium"
+              className="py-2 text-center username-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium"
               placeholder="Enter your email"
             />
           </Form.Item>
@@ -167,7 +167,7 @@ function Signup() {
             ]}
           >
             <Input.Password
-              className="py-2 text-center password-input bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium signup-password"
+              className="py-2 text-center password-input bg-customPink border-4 rounded-none border-customBeige text-customBlue font-medium signup-password"
               placeholder="Enter your password"
             />
           </Form.Item>
@@ -211,7 +211,7 @@ function Signup() {
         </div>
         <div className="flex justify-center items-center mt-6 flex-col">
           <Button
-            className="rounded-none bg-black px-10 submit-btn"
+            className="rounded-none bg-customOrange px-10 submit-btn"
             type="primary"
             htmlType="submit"
           >
