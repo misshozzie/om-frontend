@@ -146,8 +146,8 @@ function Login() {
         autoComplete="off"
         className="w-full"
       >
-        <div className="bg-black w-full py-5 px-14">
-          <h2 className="uppercase text-white text-center mb-4 font-medium text-xl">
+        <div className="bg-customBlue w-full py-5 px-14">
+          <h2 className="uppercase text-customBeige text-center mb-4 font-medium text-xl">
             Login
           </h2>
           <Form.Item
@@ -171,7 +171,7 @@ function Login() {
             ]}
           >
             <Input
-              className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium"
+              className="py-2 text-center username-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium"
               placeholder="Enter your email"
               onChange={handleInputChange}
               value={formData.email} required
@@ -190,27 +190,27 @@ function Login() {
             ]}
           >
             <Input.Password
-              className="py-2 text-center password-input bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium signup-password"
+              className="py-2 text-center password-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium signup-password"
               placeholder="Enter your password"
               onChange={handleInputChange}
               value={formData.password} required
             />
           </Form.Item>
           <div className="flex justify-between items-center sm:ml-20">
-            <p className="text-white">
+            <p className="text-customBeige">
               No Account?&nbsp;
-              <NavLink to="/signup" className="text-white">
+              <NavLink to="/signup" className="text-customBeige">
                 Signup here
               </NavLink>
             </p>
-            <NavLink href="/forgot-password" className="text-white">
+            <NavLink href="/forgot-password" className="text-customBeige">
               Forgot Password?
             </NavLink>
           </div>
         </div>
         <div className="flex justify-center items-center mt-6 flex-col">
           <Button
-            className="rounded-none bg-black px-10 submit-btn"
+            className="rounded-none bg-customOrange px-10 submit-btn"
             type="primary"
             htmlType="submit"
             onClick={handleInputChange}

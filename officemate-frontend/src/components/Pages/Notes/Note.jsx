@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios"; 
+import axios from "axios";
 import { message } from "antd";
+import LogoImage from "../../../assets/images/omlogo2.png";
 
 const Note = () => {
-// function Note() {
+  // function Note() {
   const [allNotes, setAllNotes] = useState([]);
 
   // useEffect(() => {
@@ -27,11 +28,11 @@ const Note = () => {
         if (Array.isArray(response.data)) {
           setAllNotes(response.data);
         } else {
-            console.error("Received data is not an array:", response.data);
-        } 
-      } catch (error) { 
+          console.error("Received data is not an array:", response.data);
+        }
+      } catch (error) {
         console.error("Error fetching notes:", error);
-      } 
+      }
     };
 
     fetchNotes();
@@ -57,9 +58,11 @@ const Note = () => {
   return (
     <div className="mx-10 mt-10 mb-60">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">LOGO</h1>
+        <h1 className="text-2xl font-bold">
+          <img src={LogoImage} alt="OfficeMate Logo" />
+        </h1>
         <Link to="/Notes/addNote">
-          <button className="btn btn-primary text-white font-semibold">
+          <button className="btn bg-customOrange text-white font-semibold">
             Add Notes +
           </button>
         </Link>

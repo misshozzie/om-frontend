@@ -3,7 +3,8 @@ import Lottie from "lottie-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-//import addUser from "../../../../../assets/addUser.json";
+//import addUser from "../../../assets/styles/addUser.json";
+import addnotes from "../../../assets/styles/addnotes.json";
 
 function AddNote() {
   const [selectedDate, setSelectedDate] = useState("");
@@ -14,14 +15,14 @@ function AddNote() {
 
   const onFinish = async (values) => {
     try {
-      const { title, user, calender } = values;
+      const { title, user, calendar } = values;
 
       // Create a new note object
       const newNote = {
         Title: title,
         Date: selectedDate,
         Description: user.description,
-        Calendar: calender,
+        Calendar: calendar,
         Tasks: [],
       };
 
@@ -55,7 +56,7 @@ function AddNote() {
         <Form
           name="basic"
           initialValues={{
-            calender: true,
+            calendar: true,
           }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -104,14 +105,14 @@ function AddNote() {
           >
             <Input.TextArea />
           </Form.Item>
-          <Form.Item name="calender" valuePropName="checked">
-            <Checkbox>Add to Calender</Checkbox>
+          <Form.Item name="calendar" valuePropName="checked">
+            <Checkbox>Add to Calendar</Checkbox>
           </Form.Item>
 
           <div className="flex gap-2 justify-center">
             <Link to="/Notes">
               <button
-                className="btn btn-wide btn-warning text-white"
+                className="btn btn-wide bg-customBlue text-white"
                 id="customizeBtn"
               >
                 Return
@@ -120,7 +121,7 @@ function AddNote() {
             <Form.Item>
               <button
                 type="submit"
-                className="btn btn-wide btn-primary text-white"
+                className="btn btn-wide bg-customOrange text-white"
               >
                 Create Note
               </button>
@@ -129,7 +130,7 @@ function AddNote() {
         </Form>
       </div>
       <Lottie
-        animationData={addUser}
+        animationData={addnotes}
         loop={true}
         style={{ width: "400px", height: "auto" }}
       />

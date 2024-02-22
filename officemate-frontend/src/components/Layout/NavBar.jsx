@@ -134,7 +134,7 @@ function NavBar() {
                 <summary>MENU</summary>
                 <ul className="p-3 bg-customBlue rounded-t-none">
                   <li>
-                    <Link to="/calendar">Calender</Link>
+                    <Link to="/calendar">Calendar</Link>
                   </li>
                   <li>
                     <Link to="/Notes">Notes</Link>
