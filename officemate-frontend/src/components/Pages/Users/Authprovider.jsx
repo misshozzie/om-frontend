@@ -13,9 +13,8 @@ import {
   
   const auth = getAuth(app);
   
-  // eslint-disable-next-line react/prop-types
-  function AuthProvider(children) {
-  //const AuthProvider = ({ children }) => {
+  
+  function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
   
@@ -25,17 +24,6 @@ import {
       setLoading(true);
       return signInWithPopup(auth, googleProvider);
     };
-  
-    // useEffect(() => {
-    //   // Check if user is already logged in (persisting state)
-    //   const token = localStorage.getItem("token");
-    //   if (token) {
-    //     // Decode the token to get user details
-    //     // const decodedToken = jwt_decode(token);
-    //     setUser(token);
-    //   }
-    //   setLoading(false);
-    // }, []);
   
     const logOut = () => {
       setLoading(true);
@@ -55,18 +43,7 @@ import {
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser);
-        // if (currentUser) {
-        //   axios
-        //     .post("http://localhost:5000/jwt", {
-        //       email: currentUser.email,
-        //     })
-        //     .then((data) => {
-        //       localStorage.setItem("access-token", data.data.token);
-        //       setLoading(false);
-        //     });
-        // } else {
-        //   localStorage.removeItem("access-token");
-        // }
+        setLoading(false);
       });
       return () => {
         return unsubscribe();

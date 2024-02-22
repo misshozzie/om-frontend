@@ -11,6 +11,7 @@ function NavBar() {
   useEffect(() => {
     // Function to fetch all users from the server
     const fetchAllUsers = async () => {
+      if (!user || !user.email) return; // Make sure user and user.email are defined
       try {
         const response = await axios.get("http://localhost:3000/user");
         const Data = response.data;
@@ -22,7 +23,7 @@ function NavBar() {
     };
     // Call the fetchAllUsers function when the component mounts
     fetchAllUsers();
-  }, [user]); // Empty dependency array ensures that this effect runs only once, on component mount
+  }, [user]);
 
   const handleLogOut = () => {
     logOut();

@@ -3,17 +3,35 @@ import { Link } from "react-router-dom";
 import axios from "axios"; 
 import { message } from "antd";
 
-function Note() {
+const Note = () => {
+// function Note() {
   const [allNotes, setAllNotes] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchNotes = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:3000/notes");
+  //       setAllNotes(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching notes:", error);
+  //     }
+  //   };
+
+  //   fetchNotes();
+  // }, [allNotes]);
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const response = await axios.get("http://localhost:3000/notes");
-        setAllNotes(response.data);
-      } catch (error) {
+        if (Array.isArray(response.data)) {
+          setAllNotes(response.data);
+        } else {
+            console.error("Received data is not an array:", response.data);
+        } 
+      } catch (error) { 
         console.error("Error fetching notes:", error);
-      }
+      } 
     };
 
     fetchNotes();
