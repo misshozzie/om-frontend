@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Pages/Users/Authprovider";
-import OfficematesLogo from "../../assets/images/officemateLogoNobg.png"; 
+import OfficematesLogo from "../../assets/images/omlogo2.png"; 
 import axios from "axios";
 
 function NavBar() {
@@ -30,9 +30,9 @@ function NavBar() {
   };
   return (
     <div>
-      <div className="navbar bg-black text-white">
+      <div className="navbar bg-customBlue text-white">
         <div className="navbar-start">
-          <div className="dropdown">
+          <div className="dropdown" >
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ function NavBar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-slate-500 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-customBlue rounded-box w-52"
             >
               {!user && (
                 <>
@@ -66,7 +66,7 @@ function NavBar() {
               <li>
                 <details>
                   <summary>MENU</summary>
-                  <ul className="p-3 bg-slate-500 rounded-t-none">
+                  <ul className="p-3 bg-customBlue rounded-t-none">
                     <li>
                       <Link to="/calendar">Calendar</Link>
                     </li>
@@ -108,7 +108,7 @@ function NavBar() {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost text-xl">
-          <img src={OfficematesLogo} alt="officemateLogo" /></Link>
+          <img src={OfficematesLogo} alt="officemateLogo" style={{width:'150px', height:'auto'}} /></Link>
         </div>
         <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal md:px-1">
@@ -132,7 +132,7 @@ function NavBar() {
             <li>
               <details>
                 <summary>MENU</summary>
-                <ul className="p-3 bg-slate-500 rounded-t-none">
+                <ul className="p-3 bg-customBlue rounded-t-none">
                   <li>
                     <Link to="/calendar">Calender</Link>
                   </li>
