@@ -1,34 +1,129 @@
-import { useState, useContext } from 'react';
-import { AuthContext } from '../Users/Authprovider';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { hashData } from '../util/security'; // Ensure this is correctly imported
-import '../../../index.css';
+import { useState, useContext } from "react";
+import { AuthContext } from "../Users/Authprovider";
+import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import { hashData } from "../../../util/security";
+import Joi from "joi";
+import "../../../index.css";
+import { Form } from "antd";
 
-function Signup() {
-  const { googleSignIn, setUser } = useContext(AuthContext);
+// function Signup() {
+//   const { googleSignIn, setUser } = useContext(AuthContext);
+//   const navigate = useNavigate();
+//   const navigation = useNavigation();
+//   const location = useLocation();
+
+//   const from = location.state?.from?.pathname || "/";
+
+//   if (navigation.state === "loading") {
+//     return <progress className="progress w-56"></progress>;
+//   }
+//   const onFinish = async (values) => {
+//     const defaultUser = {
+//       role: "user",
+//     };
+
+//     const userData = {
+//       ...defaultUser,
+//       ...values,
+//     };
+
+//     try {
+//       const response = await axios.post(
+//         "http://localhost:5000/signup",
+//         userData
+//       );
+
+//       setUser(response.data.user);
+
+//       message.success("Signup successful");
+//       navigate('/login', { replace: true });
+//     } catch (error) {
+//       console.error("Signup failed:", error?.response?.data?.error);
+
+//       message.error("Failed to signup. Please try again later.");
+//     }
+//   };
+
+//   const onFinishFailed = (errorInfo) => {
+//     console.log("Failed:", errorInfo);
+//   };
+
+//   const handleGoogle = () => {
+//     googleSignIn()
+//       .then((result) => {
+//         const user = result.user;
+//         const saveUser = {
+//           username: user.displayName,
+//           email: user.email,
+//           role: "user",
+//           password: "",
+//         };
+
+//         axios
+//           .post("http://localhost:5000/user", saveUser, {
+//             headers: {
+//               "Content-Type": "application/json",
+//             },
+//           })
+//           .then(() => {
+//             message.success("Login successful");
+//             navigate(from, { replace: true });
+//           })
+//           .catch((error) => {
+//             console.error("Error posting user data:", error);
+//           });
+//       })
+//       .catch((error) => {
+//         console.error("Google sign-in error:", error.message);
+//       });
+//   };
+
+const Signup = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [disable, setDisable] = useState(true);
 
+  const { googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || "/";
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+  setDisable(checkPassword());
+};
 
-  const handleGoogle = async () => {
-    try {
-      const result = await googleSignIn();
+const togglePasswordVisibility = () => {
+  setShowPassword(!showPassword);
+};
+
+async function onSubmit(e) {
+  e.preventDefault();
+  setIsLoading(true);
+  try {
+    const user = await signUp(formData);
+    navigate("/login");
+  } catch (error) {
+    console.error(error);
+    setIsLoading(false);
+  }
+}
+
+const handleGoogle = () => {
+  googleSignIn()
+    .then((result) => {
       const user = result.user;
       const saveUser = {
         username: user.displayName,
@@ -36,49 +131,33 @@ function Signup() {
         role: "user",
         password: "",
       };
-  
-      await axios.post("http://localhost:3000/user", saveUser, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-  
+
+      axios.post("http://localhost:3000/user", saveUser, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
         message.success("Login successful");
         navigate(from, { replace: true });
-      } catch (error) {
-        console.error("Google sign-in error:", error.message);
-      }
-    };
-  };
+      })
+      .catch((error) => {
+        displayErrorMessage("Error posting user data.");
+      });
+    })
+    .catch((error) => {
+      displayErrorMessage("Google sign-in error."); 
+    });
+};
 
-  const onSubmit = async (e) => {
-    e.preventDefault(); 
+function displayErrorMessage(msg) {
+  alert(msg); 
 
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match.');
-      return;
-    }
+}
 
-    const hashedPasswordData = hashData(formData.password); 
-    
-    try {
-      const userData = {
-        ...formData,
-        password: hashedPasswordData.hash, 
-        salt: hashedPasswordData.salt, 
-        iterations: hashedPasswordData.iterations, 
-      };
 
-      const response = await axios.post('http://localhost:3000/signup', userData);
-      console.log(response.data);
-      setUser(response.data.user);
-      navigate('/login');
-    } catch (error) {
-      console.error('Signup error:', error.response?.data?.message || 'An error occurred');
-    }
-  };
+return (
 
-  return (
     <div className="h-[calc(100vh-120px)] flex justify-center items-center overflow-auto">
       <Form
         name="basic"
@@ -215,5 +294,6 @@ function Signup() {
       </Form>
     </div>
   );
+};
 
 export default Signup;

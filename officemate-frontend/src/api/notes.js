@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export function getOneCard() {
+/*=== GET ALL NOTES === */
+export function getAllNotes() {
+  //
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(null);
+  const [data, setData] = useState([]);
 
-  async function getData(planID) {
-    const fullURL = `${BASE_URL}/plans/${planID}`;
+  async function getData(username) {
+    const fullURL = `${BASE_URL}/notes/all/${username}`;
     const token = localStorage.getItem("token");
     setIsLoading(true);
 
@@ -16,8 +18,148 @@ export function getOneCard() {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      console.log("api error:", json);
+      setError(json);
+    }
+    if (res.ok) {
+      setData(json);
+      setIsLoading(false);
+    }
+  }
+
+  return { getData, data, isLoading, error };
+}
+
+/*=== NEW NOTE === */
+export function newNote() {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [response, setResponse] = useState(null);
+
+  async function postData(username, body) {
+    setIsLoading(true);
+    const fullURL = `${BASE_URL}/notes/create/${username}`;
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(fullURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setError(json);
+    }
+    if (res.ok) {
+      console.log("Data is created");
+      setResponse(json);
+      setIsLoading(false);
+    }
+  }
+
+  return { postData, response, isLoading, error };
+}
+
+/*=== DELETE NOTE === */
+export function deleteNote() {
+  const [deleteError, setDeleteError] = useState(null);
+  const [isdeleteLoading, setDeleteIsLoading] = useState(null);
+  const [dataDeleted, setDataDeleted] = useState(null);
+
+  async function deleteData(username, noteid) {
+    setDeleteIsLoading(true);
+    const fullURL = `${BASE_URL}/notes/${username}?noteid=${noteid}`;
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(fullURL, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      console.log("trip delete error:", json);
+      setDeleteError(json.error);
+    }
+    if (res.ok) {
+      setDataDeleted(json);
+      setDeleteIsLoading(false);
+    }
+  }
+
+  return { deleteData, dataDeleted, isdeleteLoading, deleteError };
+}
+
+/*=== DELETE NOTE === */
+export function getOneNote() {
+  //
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [data, setData] = useState({});
+
+  async function getOneData(username, noteid) {
+    const fullURL = `${BASE_URL}/notes/one/${username}?noteid=${noteid}`;
+
+    const token = localStorage.getItem("token");
+    setIsLoading(true);
+
+    const res = await fetch(fullURL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setError(json);
+    }
+    if (res.ok) {
+      setData(json);
+      setIsLoading(false);
+    }
+  }
+
+  return { getOneData, data, isLoading, error };
+}
+
+/*=== UPDATE ONE NOTE === */
+export function updateOneNote() {
+  //
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [data, setData] = useState({});
+
+  async function updateOneData(username, noteid, body) {
+    const fullURL = `${BASE_URL}/notes/${username}?noteid=${noteid}`;
+
+    const token = localStorage.getItem("token");
+    setIsLoading(true);
+
+    const res = await fetch(fullURL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
     });
 
     const json = await res.json();
@@ -26,138 +168,43 @@ export function getOneCard() {
       setError(json.error);
     }
     if (res.ok) {
-      //   localStorage.setItem("token", json.token); --> to update: need this later
-      setData(json);
-      console.log(json);
       setIsLoading(false);
     }
   }
 
-  return { getData, data, isLoading, error };
+  return { updateOneData, data, isLoading, error };
 }
 
-export async function createPlan(formData, tripid) {
-  const tripID = tripid;
-  const fullURL = `${BASE_URL}/plans/${tripID}`;
-  const token = localStorage.getItem("token");
+/*=== ADD NEW EVENT === */
+export function newEvent(eventData) {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [response, setResponse] = useState(null);
 
-  const sendData = {
-    header: formData.header,
-    description: formData.description,
-    tripID: tripID,
-  };
+  async function postData(username, body) {
+    setIsLoading(true);
+    const fullURL = `${BASE_URL}/events/${username}`;
+    const token = localStorage.getItem("token");
 
-  const res = await fetch(fullURL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify(sendData),
-  });
+    const res = await fetch(fullURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(event),
+    });
 
-  const json = await res.json();
+    const json = await res.json();
 
-  if (!res.ok) {
-    return { error: json.error };
-  }
-  return { error: null };
-}
-
-export async function updatePlan(formData, planid) {
-  const planID = planid;
-  const fullURL = `${BASE_URL}/plans/${planID}`;
-  const token = localStorage.getItem("token");
-
-  const sendData = {
-    header: formData.header,
-    description: formData.description,
-  };
-
-  const res = await fetch(fullURL, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify(sendData),
-  });
-
-  const json = await res.json();
-
-  if (!res.ok) {
-    return { error: json.error };
-  }
-  return { error: null };
-}
-
-export async function showPlans(tripid) {
-  const tripID = tripid;
-  const fullURL = `${BASE_URL}/plans/${tripID}`;
-  const token = localStorage.getItem("token");
-
-  const res = await fetch(fullURL, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  const json = await res.json();
-  const jsonArray = Object.values(json);
-
-  if (!res.ok) {
-    return { error: json, data: null };
+    if (!res.ok) {
+      setError(json);
+    }
+    if (res.ok) {
+      setResponse(json);
+      setIsLoading(false);
+    }
   }
 
-  return { error: null, data: jsonArray };
-}
-
-export async function deleteOnePlan(tripid, planid) {
-  const fullURL = `${BASE_URL}/plans/${tripid}`;
-  const token = localStorage.getItem("token");
-
-  const res = await fetch(fullURL, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify({ planid: planid }),
-  });
-
-  const json = await res.json();
-
-  if (!res.ok) {
-    throw new Error(json.error);
-  }
-
-  return json;
-}
-
-export async function getOnePlan(tripid, planid) {
-  const fullURL = `${BASE_URL}/plans/${tripid}/${planid}`;
-  const token = localStorage.getItem("token");
-
-  const res = await fetch(fullURL, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  const json = await res.json();
-
-  if (!res.ok) {
-    throw new Error(json.error);
-  }
-
-  return json;
+  return { postData, response, isLoading, error };
 }
