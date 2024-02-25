@@ -4,32 +4,15 @@ import axios from "axios";
 import { message } from "antd";
 import LogoImage from "../../../assets/images/omlogo2.png";
 
-const Note = () => {
-  // function Note() {
+//const Note = () => {
+function Note() {
   const [allNotes, setAllNotes] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchNotes = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:3000/notes");
-  //       setAllNotes(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching notes:", error);
-  //     }
-  //   };
-
-  //   fetchNotes();
-  // }, [allNotes]);
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const response = await axios.get("http://localhost:3000/notes");
-        if (Array.isArray(response.data)) {
-          setAllNotes(response.data);
-        } else {
-          console.error("Received data is not an array:", response.data);
-        }
+        setAllNotes(response.data);
       } catch (error) {
         console.error("Error fetching notes:", error);
       }
@@ -38,6 +21,7 @@ const Note = () => {
     fetchNotes();
   }, [allNotes]);
 
+
   const handleDeleteBtn = async (id) => {
     try {
       // Send a DELETE request to the server route with the note ID
@@ -45,8 +29,6 @@ const Note = () => {
       if (response.status === 200) {
         // If the deletion is successful, you can perform additional actions if needed
         message.success("Note deleted successfully!");
-
-        // Optionally, you can navigate to another page or update the UI
       }
     } catch (error) {
       message.error("Error deleting note");

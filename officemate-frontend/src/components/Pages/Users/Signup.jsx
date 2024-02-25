@@ -1,92 +1,81 @@
-import { useContext } from "react";
-import { AuthContext } from "../Users/Authprovider";
-import axios from "axios"; // Import axios for making HTTP requests
-import {
-  NavLink,
-  useLocation,
-  useNavigate,
-  useNavigation,
-} from "react-router-dom";
-import { Button, Form, Input, message } from "antd";
-import { validateEmail } from "../../../services/utils"
-import SocialLogin from "../Users/SocialLogin";
-import "../../../index.css";
+import { useState, useContext } from 'react';
+import { AuthContext } from '../Users/Authprovider';
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { hashData } from '../util/security'; // Ensure this is correctly imported
+import '../../../index.css';
 
 function Signup() {
   const { googleSignIn, setUser } = useContext(AuthContext);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   const navigate = useNavigate();
-  //const navigation = useNavigation();
   const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
 
-  const from = location.state?.from?.pathname || "/";
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
-  // if (navigation.state === "loading") {
-  //   return <progress className="progress w-56"></progress>;
-  // }
-  const onFinish = async (values) => {
-    const defaultUser = {
-      role: "user",
-    };
-
-    const userData = {
-      ...defaultUser,
-      ...values,
-    };
-
+  const handleGoogle = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/signup",
-        userData
-      );
-      console.log(response);
-
-      // Set the user in AuthContext after successful signup
-      setUser(response.data.user);
-
-      // Display success message using Ant Design message component
-      message.success("Signup successful");
-      navigate('/login', { replace: true });
-    } catch (error) {
-      console.error("Signup failed:", error?.response?.data?.error);
-      // Display error message using Ant Design message component
-      message.error("Failed to signup. Please try again later.");
-    }
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  const handleGoogle = () => {
-    googleSignIn()
-      .then((result) => {
-        const user = result.user;
-        const saveUser = {
-          username: user.displayName,
-          email: user.email,
-          role: "user",
-          password: "",
-        };
-
-        axios
-          .post("http://localhost:3000/user", saveUser, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-          .then(() => {
-            message.success("Login successful"); // Display success message
-            navigate(from, { replace: true });
-          })
-          .catch((error) => {
-            console.error("Error posting user data:", error);
-            message.error("Failed to process Google sign-in. Please try again later.");
-          });
-      })
-      .catch((error) => {
+      const result = await googleSignIn();
+      const user = result.user;
+      const saveUser = {
+        username: user.displayName,
+        email: user.email,
+        role: "user",
+        password: "",
+      };
+  
+      await axios.post("http://localhost:3000/user", saveUser, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+  
+        message.success("Login successful");
+        navigate(from, { replace: true });
+      } catch (error) {
         console.error("Google sign-in error:", error.message);
-        message.error("Google sign-in failed. Please try again.");
-      });
+      }
+    };
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault(); 
+
+    if (formData.password !== formData.confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    const hashedPasswordData = hashData(formData.password); 
+    
+    try {
+      const userData = {
+        ...formData,
+        password: hashedPasswordData.hash, 
+        salt: hashedPasswordData.salt, 
+        iterations: hashedPasswordData.iterations, 
+      };
+
+      const response = await axios.post('http://localhost:3000/signup', userData);
+      console.log(response.data);
+      setUser(response.data.user);
+      navigate('/login');
+    } catch (error) {
+      console.error('Signup error:', error.response?.data?.message || 'An error occurred');
+    }
   };
 
   return (
@@ -109,7 +98,7 @@ function Signup() {
         autoComplete="off"
         className="w-full"
       >
-        <div className="bg-customBlue w-full py-5 px-14">
+        <div className="bg-black w-full py-5 px-14">
           <h2 className="uppercase text-white text-center mb-4 font-medium text-xl">
             Signup
           </h2>
@@ -125,7 +114,7 @@ function Signup() {
             ]}
           >
             <Input
-              className="py-2 text-center username-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium"
+              className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium"
               placeholder="Enter your username"
             />
           </Form.Item>
@@ -151,7 +140,7 @@ function Signup() {
             ]}
           >
             <Input
-              className="py-2 text-center username-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium"
+              className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium"
               placeholder="Enter your email"
             />
           </Form.Item>
@@ -167,7 +156,7 @@ function Signup() {
             ]}
           >
             <Input.Password
-              className="py-2 text-center password-input bg-customPink border-4 rounded-none border-customBeige text-customBlue font-medium signup-password"
+              className="py-2 text-center password-input bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium signup-password"
               placeholder="Enter your password"
             />
           </Form.Item>
@@ -211,7 +200,7 @@ function Signup() {
         </div>
         <div className="flex justify-center items-center mt-6 flex-col">
           <Button
-            className="rounded-none bg-customOrange px-10 submit-btn"
+            className="rounded-none bg-black px-10 submit-btn"
             type="primary"
             htmlType="submit"
           >
@@ -226,6 +215,5 @@ function Signup() {
       </Form>
     </div>
   );
-};
 
 export default Signup;

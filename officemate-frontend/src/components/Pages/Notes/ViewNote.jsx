@@ -12,7 +12,7 @@ function ViewNote(){
     useEffect(() => {
         const fetchNote = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/notes/${id}`);
+            const response = await axios.get(`http://localhost:3000/notes/${id}`);
             const fetchedNoteData = response.data;
             setNoteData(fetchedNoteData);
           } catch (error) {
