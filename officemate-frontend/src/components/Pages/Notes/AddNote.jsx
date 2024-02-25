@@ -3,7 +3,6 @@ import Lottie from "lottie-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-//import addUser from "../../../assets/styles/addUser.json";
 import addnotes from "../../../assets/styles/addnotes.json";
 
 function AddNote() {

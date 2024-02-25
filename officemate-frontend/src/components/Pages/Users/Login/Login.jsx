@@ -7,22 +7,18 @@ import {
   useNavigate,
   useNavigation,
 } from "react-router-dom";
-import { AuthContext } from "../Authprovider"
-import { validateEmail } from '../../../../services/utils';
+import { AuthContext } from "../Authprovider";
+import { validateEmail } from "../../../../services/utils";
 import SocialLogin from "../SocialLogin";
 import { hashDataWithSaltRounds, storeToken } from "../../../../util/security";
 import "../Login/Login.css";
 
 function Login() {
-  //const LoginForm = () => {
-  const { googleSignIn, setUser } = useContext(AuthContext);
+  const { googleSignIn, setUser, login } = useContext(AuthContext);
   const navigate = useNavigate();
   const navigation = useNavigation();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [allUser, setAllUser] = useState([]);
 
   useEffect(() => {
@@ -35,61 +31,25 @@ function Login() {
         console.error("Error fetching users:", error);
       }
     };
-    // Call the fetchAllUsers function when the component mounts
+
     fetchAllUsers();
-  }, []); // Empty dependency array ensures that this effect runs only once, on component mount
+  }, []);
 
   if (navigation.state === "loading") {
     return <progress className="progress w-56"></progress>;
   }
 
-  const onFinish = async (values) => {
+  const onFinish = async ({ email, password }) => {
     try {
-      const response = await axios.post("http://localhost:3000/login", values);
-      const { token, auth } = response.data;
-      localStorage.setItem("token", token);
+      login(email, password);
 
-      // Assuming allUser is available in scope
-      const foundUser = allUser.find((u) => u.email === values.email);
+      const foundUser = allUser.find((u) => u.email === email);
       setUser(foundUser);
 
-      message.success("Login successful"); // Display success message
-
-      navigate("/"); // Redirect to home page after successful login
+      message.success("Login successful");
+      navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      // has the password
-      const hashedPassword = hashedPassword(formData.password);
-      //make a copy of formData to avoid directly mutating state
-      const loginDate = { ...formData, password: hashedPassword };
-
-      //Attempt to login
-      const {
-        date: { token, user },
-      } = await axios.post("http://localhost:3000/login", loginData);
-
-      storeToken(token);
-      setUser(user);
-      navigate(from, { replace: tru });
-      setErrorMessage("Login failed. Please check your credentials.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -126,6 +86,7 @@ function Login() {
         console.error("Google sign-in error:", error.message);
       });
   };
+
   return (
     <div className="h-[calc(100vh-120px)] flex justify-center items-center overflow-auto">
       <Form
@@ -173,9 +134,6 @@ function Login() {
             <Input
               className="py-2 text-center username-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium"
               placeholder="Enter your email"
-              onChange={handleInputChange}
-              value={formData.email} required
-              
             />
           </Form.Item>
           <Form.Item
@@ -192,8 +150,6 @@ function Login() {
             <Input.Password
               className="py-2 text-center password-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium signup-password"
               placeholder="Enter your password"
-              onChange={handleInputChange}
-              value={formData.password} required
             />
           </Form.Item>
           <div className="flex justify-between items-center sm:ml-20">
@@ -203,9 +159,6 @@ function Login() {
                 Signup here
               </NavLink>
             </p>
-            <NavLink href="/forgot-password" className="text-customBeige">
-              Forgot Password?
-            </NavLink>
           </div>
         </div>
         <div className="flex justify-center items-center mt-6 flex-col">
@@ -213,7 +166,6 @@ function Login() {
             className="rounded-none bg-customOrange px-10 submit-btn"
             type="primary"
             htmlType="submit"
-            onClick={handleInputChange}
           >
             Submit
           </Button>
