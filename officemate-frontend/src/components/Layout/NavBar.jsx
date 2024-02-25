@@ -1,33 +1,29 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Pages/Users/Authprovider";
 import OfficematesLogo from "../../assets/images/omlogo2.png"; 
-import axios from "axios";
 
-function NavBar() {
-  const { user, logOut } = useContext(AuthContext);
-  const [currentUser, setCurrentUser] = useState(null);
+const NavBar = ({ username, setUser }) => {
+  const { user } = useContext(AuthContext);
 
+  const navigate = useNavigate();
   useEffect(() => {
-    // Function to fetch all users from the server
-    const fetchAllUsers = async () => {
-      if (!user || !user.email) return; // Make sure user and user.email are defined
-      try {
-        const response = await axios.get("http://localhost:3000/user");
-        const Data = response.data;
-        const foundUser = Data.find((u) => u.email === user.email);
-        setCurrentUser(foundUser);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-    // Call the fetchAllUsers function when the component mounts
-    fetchAllUsers();
-  }, [user]);
-
-  const handleLogOut = () => {
-    logOut();
+    if (username) {
+      navigate(`user/widgets?username=${username}`);
+    } else {
+      navigate("/login");
+    }
+  }, []);
+  
+  const logout = async () => {
+    try {
+      logoutUser();
+      setUser(null);
+      navigate("/login");
+    } catch (error) {
+    }
   };
+  
   return (
     <div>
       <div className="navbar bg-customBlue text-white">
@@ -68,38 +64,46 @@ function NavBar() {
                   <summary>MENU</summary>
                   <ul className="p-3 bg-customBlue rounded-t-none">
                     <li>
-                      <Link to="/calendar">Calendar</Link>
+                      <Link to="/calendar"
+                      onClick={() => navigate(`/user/calendar?username=${username}`)}
+                      >Calendar</Link>
                     </li>
                     <li>
-                      <Link to="/Notes">Notes</Link>
+                      <Link to="/Notes"
+                      onClick={() => navigate(`/user/notes?username=${username}`)}
+                      >Notes</Link>
                     </li>
                     <li>
-                      <Link to="/pdfConverter">Converter</Link>
+                      <Link to="/pdfConverter"
+                      onClick={() => navigate(`/user/pdfConverter?username=${username}`)}
+                      >Converter</Link>
                     </li>
                   </ul>
                 </details>
               </li>
               <li>
-                <Link to="/widgets">WIDGETS</Link>
+                <Link to="/widgets"
+                onClick={() => navigate(`/user/widgets?username=${username}`)}
+                >WIDGETS</Link>
               </li>
               {user && (
                 <>
-                  {user && currentUser && currentUser.role === "user" && (
+                  {user && user && user.role === "user" && (
                     <li>
                       <Link
-                        to={`/updateProfile/${currentUser?.email}`} // Pass current user's email as URL parameter
+                        to={`/updateProfile/${user?.email}`}
                       >
                         ACCOUNT
                       </Link>
                     </li>
                   )}
-                  {currentUser && currentUser.role === "admin" && (
+                  {user && user?.role === "admin" && (
                     <li>
                       <Link to="/adminPage">DASHBOARD</Link>
                     </li>
                   )}
                   <li>
-                    <Link to="/" onClick={handleLogOut}>
+                    <Link to="/" onClick={logout}>
                       LOGOUT
                     </Link>
                   </li>
@@ -134,13 +138,19 @@ function NavBar() {
                 <summary>MENU</summary>
                 <ul className="p-3 bg-customBlue rounded-t-none">
                   <li>
-                    <Link to="/calendar">Calendar</Link>
+                    <Link to="/calendar"
+                    onClick={() => navigate(`/user/calendar?username=${username}`)}
+                    >Calendar</Link>
                   </li>
                   <li>
-                    <Link to="/Notes">Notes</Link>
+                    <Link to="/Notes"
+                    onClick={() => navigate(`/user/notes?username=${username}`)}
+                    >Notes</Link>
                   </li>
                   <li>
-                    <Link to="/pdfConverter">Converter</Link>
+                    <Link to="/pdfConverter"
+                    onClick={() => navigate(`/user/pdfConverter?username=${username}`)}
+                    >Converter</Link>
                   </li>
                 </ul>
               </details>
@@ -148,24 +158,24 @@ function NavBar() {
             <li>
               <Link to="/widgets">WIDGETS</Link>
             </li>
-            {user && (
+            {user && user.auth && (
               <>
-                {user && currentUser && currentUser.role === "user" && (
+                {user && user && user.role === "user" && (
                   <li>
                     <Link
-                      to={`/updateProfile/${currentUser?.email}`} // Pass current user's email as URL parameter
+                      to={`/updateProfile/${user?.email}`}
                     >
                       ACCOUNT
                     </Link>
                   </li>
                 )}
-                {currentUser && currentUser.role === "admin" && (
+                {user && user?.role === "admin" && (
                   <li>
                     <Link to="/adminPage">DASHBOARD</Link>
                   </li>
                 )}
                 <li>
-                  <Link to="/" onClick={handleLogOut}>
+                  <Link to="/" onClick={logout}>
                     LOGOUT
                   </Link>
                 </li>

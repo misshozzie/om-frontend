@@ -98,4 +98,4 @@ The Officemate Web App user stories include features such as notes and tasks han
 - As usual, I enjoy designing the UI. My first time using TailwindCss and daisyUI. 
 ## Author
 
-- [@hosannaikigai](https://www.instagram.com/hosannaikigai/)# om-frontend
+- [@hosannaikigai](https://www.instagram.com/hosannaikigai/)

@@ -5,8 +5,16 @@ import { useState } from "react";
 import axios from "axios";
 import addnotes from "../../../assets/styles/addnotes.json";
 
-function AddNote() {
+function AddNote({ setRender, render }) {
   const [selectedDate, setSelectedDate] = useState("");
+  const [formState, setFormState] = useState({});
+  const [disabled, setDisabled] = useState(true);
+  const [errors, setErrors] = useState({});
+  const { postData, data, isLoading, error } = newNote();
+  const navigate = useNavigate();
+
+  let query = new URLSearchParams(window.location.search);
+  let username = query.get("username");
 
   const dateChange = (date, dateString) => {
     setSelectedDate(dateString);
@@ -16,7 +24,6 @@ function AddNote() {
     try {
       const { title, user, calendar } = values;
 
-      // Create a new note object
       const newNote = {
         Title: title,
         Date: selectedDate,
@@ -25,15 +32,15 @@ function AddNote() {
         Tasks: [],
       };
 
-      // Send the new note data to the server
+    
       const response = await axios.post(
         "http://localhost:3000/notes/create",
         newNote
       );
-      // Check if the note creation was successful
+    
       if (response.status === 201) {
         message.success("Note created successfully");
-        // Optionally, you can redirect the user to another page
+
       } else {
         message.error("Failed to create note");
       }
@@ -105,7 +112,7 @@ function AddNote() {
             <Input.TextArea />
           </Form.Item>
           <Form.Item name="calendar" valuePropName="checked">
-            <Checkbox>Add to Calendar</Checkbox>
+            <Checkbox>Add to Calendar view</Checkbox>
           </Form.Item>
 
           <div className="flex gap-2 justify-center">
