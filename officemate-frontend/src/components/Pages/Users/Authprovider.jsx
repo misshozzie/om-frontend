@@ -5,22 +5,22 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { createContext, useEffect, useState } from "react";
+// import { createContext, useEffect, useState } from "react";
 //import { firebase } from "../../firebase/firebase.config";
 //import { firebaseConfig } from '../../../firebase/firebase.config';
-import { initializeApp } from "firebase/app";
+import { createContext, useEffect, useState } from "react";
+import { app } from "../../../firebase/firebase.config";
 import axios from "axios";
 
 export const AuthContext = createContext(null);
 
-const auth = getAuth(initializeApp);
-
+const auth = getAuth(app);
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const googleProvider = new GoogleAuthProvider();
+  const GoogleProvider = new GoogleAuthProvider();
 
   const signup = async (user) => {
     try {
@@ -59,7 +59,7 @@ function AuthProvider({ children }) {
     setLoading(true);
     signOut(auth)
       .then(() => {
-        localStorage.removeItem("token"); // Remove token from local storage
+        localStorage.removeItem("token"); 
         setUser(null);
       })
       .catch((error) => {
