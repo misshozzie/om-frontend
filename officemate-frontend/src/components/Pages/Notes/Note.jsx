@@ -6,7 +6,7 @@ import LogoImage from "../../../assets/images/omlogo2.png";
 import { useContext } from "react";
 import { AuthContext } from "../Users/Authprovider";
 
-//const Note = () => {
+
 function Note() {
   const [allNotes, setAllNotes] = useState([]);
   const {getUser} = useContext(AuthContext)
@@ -68,14 +68,14 @@ function Note() {
         {allNotes.map((note, index) => (
           <div
             key={index}
-            className="card w-80 bg-slate-800 text-primary-content"
+            className="card w-80 bg-customBlue text-primary-content"
           >
             <div className="card-body text-center">
-              <h2 className="text-xl font-semibold text-white">{note.Title}</h2>
-              <p className="text-white font-medium">{note.Date}</p>
+              <h2 className="text-xl font-semibold text-black">{note.Title}</h2>
+              <p className="text-black font-medium">{note.Date}</p>
               <div className="card-actions justify-center flex-wrap mt-5">
                 <Link to={`/Notes/viewNote/${note._id}`}>
-                  <button className="btn btn-primary text-white">View</button>
+                  <button className="btn bg-customBeige text-black">View</button>
                 </Link>
                 <Link
                   to={{
@@ -83,11 +83,11 @@ function Note() {
                     state: { from: "/Notes" },
                   }}
                 >
-                  <button className="btn btn-warning text-white">Edit</button>
+                  <button className="btn bg-customPink text-grey">Edit</button>
                 </Link>
 
                 <button
-                  className="btn btn-error text-white"
+                  className="btn bg-customOrange text-white"
                   onClick={() => handleDeleteBtn(note._id)}
                 >
                   Delete

@@ -1,6 +1,6 @@
 import {  DatePicker, Form, Input, message } from "antd";
 import Lottie from "lottie-react";
-//import update from "../../../../../assets/update.json";
+import update from "../../../assets/styles/update notes.json";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -116,7 +116,7 @@ function UpdateNote() {
           <div className="flex gap-2 justify-center">
             <Link to="/Notes">
               <button
-                className="btn btn-wide btn-warning text-white"
+                className="btn btn-wide bg-customBlue text-white"
                 id="customizeBtn"
               >
                 View Note
@@ -125,7 +125,7 @@ function UpdateNote() {
             <Form.Item>
               <button 
                 type="submit"
-                className="btn btn-wide btn-primary text-white"
+                className="btn btn-wide bg-customOrange text-white"
               >
                 Update Note
               </button>
@@ -133,11 +133,11 @@ function UpdateNote() {
           </div>
         </Form>
       </div>
-      {/* <Lottie
+      <Lottie
         animationData={update}
         loop={true}
         style={{ width: "400px", height: "auto" }}
-      /> */}
+      />
     </div>
   );
 };

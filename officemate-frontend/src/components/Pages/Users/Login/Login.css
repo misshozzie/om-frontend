@@ -10,13 +10,14 @@
 
 .password-input input {
 	text-align: center;
+
 }
 .password-input input::placeholder {
-	color: #9BCDD2;
+	color:black;
 }
 
 .password-input {
-	background-color: #45484c !important;
+	background-color: #FF8551 !important;
 }
 .password-input:hover,
 .username-input:hover {
@@ -25,7 +26,7 @@
 
 .username-input:focus,
 .password-input:focus-within {
-	background-color: #45484c !important;
+	background-color: #9BCDD2 !important;
 }
 
 .password-input .ant-input-suffix {

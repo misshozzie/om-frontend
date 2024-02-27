@@ -4,8 +4,8 @@ import { AuthContext } from "../Pages/Users/Authprovider";
 import OfficematesLogo from "../../assets/images/omlogo2.png"; 
 
 const NavBar = ({ username, setUser }) => {
-  const { user ,getUser} = useContext(AuthContext);
-
+  const { user, getUser } = useContext(AuthContext);
+  //console.log(a);
   const navigate = useNavigate();
   useEffect(() => {
     const user = getUser();
