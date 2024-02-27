@@ -1,132 +1,171 @@
 import { useState, useContext } from "react";
+import { Button, Form, Input, message } from "antd";
 import { AuthContext } from "../Authprovider";
-//import axios from "axios";
-import { useNavigate, NavLink, useLocation } from "react-router-dom";
-import { hashData } from "../../../../util/security";
-import { signUp } from "../../../../services/user";
-import "../Login/Login.css";
-import { Form, Input } from "antd";
-import { cn } from "../../../../services/utils";
+import axios from "axios";
+import { Link,useLocation ,NavLink, useNavigate } from "react-router-dom";
 
-export default function Signup() {
+// import { useNavigate, useLocation } from "react-router-dom";
+import { hashData } from "../../../../util/security";
+// import Joi from "joi";
+import "../../../../../src/index.css";
+
+// function Signup() {
+//   const { googleSignIn, setUser } = useContext(AuthContext);
+//   const navigate = useNavigate();
+//   const navigation = useNavigation();
+//   const location = useLocation();
+
+//   const from = location.state?.from?.pathname || "/";
+
+//   if (navigation.state === "loading") {
+//     return <progress className="progress w-56"></progress>;
+//   }
+//   const onFinish = async (values) => {
+//     const defaultUser = {
+//       role: "user",
+//     };
+
+//     const userData = {
+//       ...defaultUser,
+//       ...values,
+//     };
+
+//     try {
+//       const response = await axios.post(
+//         "http://localhost:5000/signup",
+//         userData
+//       );
+
+//       setUser(response.data.user);
+
+//       message.success("Signup successful");
+//       navigate('/login', { replace: true });
+//     } catch (error) {
+//       console.error("Signup failed:", error?.response?.data?.error);
+
+//       message.error("Failed to signup. Please try again later.");
+//     }
+//   };
+
+//   const onFinishFailed = (errorInfo) => {
+//     console.log("Failed:", errorInfo);
+//   };
+
+//   const handleGoogle = () => {
+//     googleSignIn()
+//       .then((result) => {
+//         const user = result.user;
+//         const saveUser = {
+//           username: user.displayName,
+//           email: user.email,
+//           role: "user",
+//           password: "",
+//         };
+
+//         axios
+//           .post("http://localhost:5000/user", saveUser, {
+//             headers: {
+//               "Content-Type": "application/json",
+//             },
+//           })
+//           .then(() => {
+//             message.success("Login successful");
+//             navigate(from, { replace: true });
+//           })
+//           .catch((error) => {
+//             console.error("Error posting user data:", error);
+//           });
+//       })
+//       .catch((error) => {
+//         console.error("Google sign-in error:", error.message);
+//       });
+//   };
+
+const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  //const { googleSignIn } = useContext(AuthContext);
-  const [disable, setDisable] = useState(true);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  //const navigate = useNavigate();
+  const [disable, setDisable] = useState(true);
 
   const { googleSignIn,signup } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-    setDisable(checkPassword());
-  };
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+  setDisable(checkPassword());
+};
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+const togglePasswordVisibility = () => {
+  setShowPassword(!showPassword);
+};
 
-  // function checkPassword() {
-  //   if (
-  //     !formData.password ||
-  //     !formData.confirmPassword ||
-  //     formData.password !== formData.confirmPassword
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // function hashPassword() {
-  //   const currForm = formData;
-  //   if (currForm.password) {
-  //     console.log(currForm.password);
-  //     const hash = hashData(currForm.password);
-  //     currForm.password = hash.hash;
-  //     currForm.salt = hashData.salt;
-  //     currForm.Iterations = hashData.iterations;
-  //   }
-  // }
-
-  async function onSubmit(e) {
-    console.log(e);
-    try {
-      const resp = await signup(e);
-      if (resp.success)
-      {
-        message.success("Signup successful");
-        navigate("/login");
-      }
-      else{
-        message.warning("Signup failed");
-      }
-    } catch (error) {
-      console.error("Signup failed:", error.response.data.errorMsg);
-      message.warning( error.response.data.errorMsg)
+async function onSubmit(e) {
+  console.log(e);
+  try{
+    const resp = await signup(e);
+    if (resp.success)
+    {
+      message.success("Signup successful");
+      navigate("/login");
     }
+    else{
+      message.warning("Failed!");
+    }
+  } catch (error) {
+    console.error("Signup failed:", error.response.data.errorMsg);
+    message.warning( error.response.data.errorMsg)
   }
-      
-  const handleGoogle = () => {
-    googleSignIn()
-      .then((result) => {
-        const user = result.user;
-        const saveUser = {
-          username: user.displayName,
-          email: user.email,
-          role: "user",
-          password: "dummy",
-        };
+}
 
-        console.log(saveUser);
-      //   axios.post("http://localhost:3000/user", saveUser, {
-      //    headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   })
-      //   .then(() => {
-      //     message.success("Login successful");
-      //     navigate(from, { replace: true });
-      //   })
-      //   .catch((error) => {
-      //     displayErrorMessage("Error posting user data.");
-      //   });
+const handleGoogle = async () => {
+  googleSignIn()
+    .then((result) => {
+      const user = result.user;
+      const saveUser = {
+        username: user.displayName,
+        email: user.email,
+        role: "user",
+        password: "dummy",
+      };
+
+      console.log(saveUser);
+      // signup(saveUser)
+      // .then((resp) => {
+      //   // if (resp.success)
+      //   message.success("Login successful");
+      //   navigate(from, { replace: true });
       // })
+      // .catch((error) => {
+      //   displayErrorMessage("Error posting user data.");
+      // });
     })
     .catch((error) => {
       displayErrorMessage("Google sign-in error."); 
     });
 };
 
-  function displayErrorMessage(msg) {
-    alert(msg);
+function displayErrorMessage(msg) {
+  alert(msg); 
 
-  }
+}
 
-  // const onSuccess = (response) => {
-  //   console.log("Google login successful:", response);
-  //   }
-  // const onFailure = (response) => {
-  //   console.error("Google login failed:", response);
-  //   }
 
-  return (
+return (
+
     <div className="h-[calc(100vh-120px)] flex justify-center items-center overflow-auto">
       <Form
-        onSubmit={onSubmit}
         name="basic"
         labelCol={{
           span: 6,
@@ -139,12 +178,12 @@ export default function Signup() {
         initialValues={{
           remember: true,
         }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
+        onFinish={onSubmit}
+        // onFinishFailed={onFinishFailed}
         autoComplete="off"
         className="w-full"
       >
-        <div className="bg-customBlue w-full py-5 px-14">
+        <div className="bg-black w-full py-5 px-14">
           <h2 className="uppercase text-white text-center mb-4 font-medium text-xl">
             Signup
           </h2>
@@ -155,7 +194,7 @@ export default function Signup() {
             rules={[
               {
                 required: true,
-                message: "Please enter your username!.",
+                message: "Please input your username!",
               },
             ]}
           >
@@ -171,7 +210,7 @@ export default function Signup() {
             rules={[
               {
                 required: true,
-                message: "Please type your email!",
+                message: "Please input your email!",
               },
               // {
               //   validator: (rule, value) => {
@@ -204,7 +243,6 @@ export default function Signup() {
             <Input.Password
               className="py-2 text-center password-input bg-[#a5a5a5] border-4 rounded-none border-[#434343] text-white font-medium signup-password"
               placeholder="Enter your password"
-              name="password"
             />
           </Form.Item>
           <Form.Item
@@ -240,11 +278,14 @@ export default function Signup() {
                 Login here
               </NavLink>
             </p>
+            <NavLink href="/forgot-password" className="text-white">
+              Forgot Password?
+            </NavLink>
           </div>
         </div>
         <div className="flex justify-center items-center mt-6 flex-col">
           <Button
-            className="rounded-none bg-customOrange px-10 submit-btn"
+            className="rounded-none bg-black px-10 submit-btn"
             type="primary"
             htmlType="submit"
           >
@@ -259,4 +300,6 @@ export default function Signup() {
       </Form>
     </div>
   );
-}
+};
+
+export default Signup;

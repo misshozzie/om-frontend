@@ -5,13 +5,13 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 /* === CREATE TASK === */
 export async function newTask(formData, noteid) {
   const noteID = noteid;
-  const fullURL = `${BASE_URL}/Notes/AddTask/${noteID}`;
+  const fullURL = `${BASE_URL}/plans/${noteID}`;
   const token = localStorage.getItem("token");
 
   const sendData = {
     header: formData.header,
     description: formData.description,
-    noteID: noteID, //---
+    tripID: tripID,
   };
 
   const res = await fetch(fullURL, {

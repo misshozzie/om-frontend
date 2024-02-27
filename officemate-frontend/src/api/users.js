@@ -1,9 +1,10 @@
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 console.log(BASE_URL);
 
 /*=== SIGN UP === */
 export async function signUp(userData) {
-  const createURL = BASE_URL + "/user/create";
+  const createURL = BASE_URL + "/users/create";
   console.log(createURL);
   const res = await fetch(createURL, {
     method: "POST",
@@ -21,7 +22,7 @@ export async function signUp(userData) {
 /*=== GET LOGIN DETAILS  === */
 export async function getLoginDetails(email) {
   const searchParams = new URLSearchParams({ email: email });
-  const getLoginDetailsURL = BASE_URL + "/user/login?" + searchParams;
+  const getLoginDetailsURL = BASE_URL + "/users/login?" + searchParams;
   console.log(getLoginDetailsURL);
   const res = await fetch(getLoginDetailsURL, {
     method: "GET",
@@ -58,7 +59,7 @@ export async function storeToken(userData) {
 /*=== LOGIN USER  === */
 export async function loginUser(userData) {
 
-  const loginURL = BASE_URL + "/user/login";
+  const loginURL = BASE_URL + "/users/login";
   console.log(loginURL);
   const res = await fetch(loginURL, {
     method: "POST",
@@ -79,7 +80,7 @@ export async function loginUser(userData) {
 /*=== LOGOUT USER === */
 export async function logoutUser(token, userData) {
 
-  const logoutURL = BASE_URL + "/user/logout";
+  const logoutURL = BASE_URL + "/users/logout";
  
   const res = await fetch(logoutURL, {
     method: "POST",
