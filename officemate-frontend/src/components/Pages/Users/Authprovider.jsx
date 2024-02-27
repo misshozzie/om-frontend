@@ -6,7 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { app } from  "./../../../firebase/firebase.config"
+import { app } from  "#firebase/firebase.config.js"
 import axios from "axios";
 
 export const AuthContext = createContext(null);
