@@ -21,7 +21,7 @@
     "cloudmersive-convert-api-client": "^2.8.0",
     "clsx": "^2.1.0",
     "crypto-js": "^4.2.0",
-    "firebase": "^10.8.0",
+    "firebase": "^10.6.0",
     "fullcalendar": "^6.1.11",
     "google-auth-library": "^9.6.3",
     "googleapis": "^133.0.0",
