@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../Pages/HomePage";
-import SignUp from "../Pages/Users/Signup";
-import NavBar from "../Layout/Footer";
+import SignUp from "../Pages/Users/Signup/Signup";
+import NavBar from "../Layout/NavBar";
 import UpdateProfile from "../Pages/Users/UpdateProfile";
 import Widgets from "../Pages/Widgets"
 import Converter from "../Pages/Converter/Converter";
@@ -81,7 +81,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/adminpage",
-        element: <PrivateRoute><AdminPage /></PrivateRoute>,
+        element: <PrivateRoute> <AdminPage /></PrivateRoute>,
       },
     ],
   },

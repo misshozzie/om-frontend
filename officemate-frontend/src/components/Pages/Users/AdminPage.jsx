@@ -1,42 +1,42 @@
 import { message } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "./Authprovider";
 
 function AdminPage() {
   const [allUser, setAllUser] = useState([]);
+  const {getUser} = useContext(AuthContext);
+
+  const fetchAllUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/users/all");
+      const users = response.data.filter(user => user.role !== "admin");
+      setAllUser(users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   useEffect(() => {
-    // Function to fetch all users from the server
-    const fetchAllUsers = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/user");
-        setAllUser(response.data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
 
     fetchAllUsers();
-  }, [allUser]);
+  // }, [allUser]);
+}, []);
 
   // Function to handle delete button click
   const handleDeleteBtn = async (id) => {
     try {
-      // Send a DELETE request to delete the user with the specified ID
       const response = await axios.delete(
         `http://localhost:3000/user/delete/${id}`
       );
-
-      // Check if the deletion was successful
       if (response.status === 200) {
-        // If successful, display a success message
         message.success("User deleted successfully!");
 
-        // Update the user list after deletion
-        setAllUser(allUser.filter((user) => user.id !== id));
+        //setAllUser(allUser.filter((user) => user.id !== id));
+        await fetchAllUsers()
       }
     } catch (error) {
-      // If an error occurs, display an error message
       message.error("Failed to delete user. Please try again later.");
       console.error("Error deleting user:", error);
     }
@@ -44,7 +44,7 @@ function AdminPage() {
   return (
     <div>
       <div className="overflow-x-auto mx-10 my-20">
-        <h1 className="text-4xl font-bold text-center mb-3">All USER HERE</h1>
+        <h1 className="text-4xl font-bold text-center mb-3">ALL USERS</h1>
         <table className="table table-zebra border-4">
           {/* head */}
           <thead>

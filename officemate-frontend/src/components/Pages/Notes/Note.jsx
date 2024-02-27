@@ -3,37 +3,53 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { message } from "antd";
 import LogoImage from "../../../assets/images/omlogo2.png";
+import { AuthContext } from "../Users/Authprovider";
 
 //const Note = () => {
 function Note() {
   const [allNotes, setAllNotes] = useState([]);
+  const {getUser} = useContext(AuthContext)
 
+  const fetchNotes = async () => {
+    try {
+      let config = {
+        headers: {
+          'Authorization': 'Bearer ' + getUser().token
+        }
+    }
+    const response = await axios.get("http://localhost:3000/notes/all",config);
+    console.log(response.data);
+    setAllNotes(response.data);
+  } catch (error) {
+    console.error("Error fetching notes:", error);
+  }
+};
   useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/notes");
-        setAllNotes(response.data);
-      } catch (error) {
-        console.error("Error fetching notes:", error);
-      }
-    };
+    //const fetchNotes = async () => {
+      //try {
+        //const response = await axios.get("http://localhost:3000/notes");
+        //setAllNotes(response.data);
+      //} catch (error) {
+        //console.error("Error fetching notes:", error);
+      //}
+    //};
 
     fetchNotes();
-  }, [allNotes]);
-
+  //}, [allNotes]);
+}, []);
 
   const handleDeleteBtn = async (id) => {
     try {
-      // Send a DELETE request to the server route with the note ID
+
       const response = await axios.delete(`http://localhost:3000/notes/${id}`);
       if (response.status === 200) {
-        // If the deletion is successful, you can perform additional actions if needed
+       
         message.success("Note deleted successfully!");
+        await fetchNotes()
       }
     } catch (error) {
       message.error("Error deleting note");
       console.error(error);
-      // Handle errors if the deletion fails
     }
   };
 
@@ -60,7 +76,7 @@ function Note() {
               <p className="text-white font-medium">{note.Date}</p>
               <div className="card-actions justify-center flex-wrap mt-5">
                 <Link to={`/Notes/viewNote/${note._id}`}>
-                  <button className="btn btn-primary text-white">View</button>
+                  <button className="btn bg-customBlue text-white">View</button>
                 </Link>
                 <Link
                   to={{
@@ -68,7 +84,7 @@ function Note() {
                     state: { from: "/Notes" },
                   }}
                 >
-                  <button className="btn btn-warning text-white">Edit</button>
+                  <button className="btn bg-customOrange text-white">Edit</button>
                 </Link>
 
                 <button

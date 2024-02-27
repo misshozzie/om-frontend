@@ -68,7 +68,7 @@ function UpdateProfile() {
         autoComplete="off"
         className="w-full"
       >
-        <div className="bg-black w-full py-5 px-14">
+        <div className="bg-customBlue w-full py-5 px-14">
           <h2 className="uppercase text-white text-center mb-4 font-medium text-xl">
             Update Profile
           </h2>
@@ -97,7 +97,7 @@ function UpdateProfile() {
             rules={[
               {
                 required: true,
-                message: "Please input your password!",
+                message: "Please enter your password!",
               },
             ]}
           >

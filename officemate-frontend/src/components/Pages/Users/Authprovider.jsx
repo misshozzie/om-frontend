@@ -20,6 +20,34 @@ import {
   
     const googleProvider = new GoogleAuthProvider();
   
+    const signup = async (user) => {
+      try {
+
+        const data = {...user,role: "user"}
+        const response = await axios.post("http://localhost:3000/users/create",data);
+        return response.data;
+        // console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        throw error
+      }
+    }
+
+    const login = async (email,password) => {
+      try {
+        const data = {email,password}
+        const response = await axios.post("http://localhost:3000/users/login",data);
+        // if (response.data.success)
+        setUser(response.data);
+        localStorage.setItem("user",JSON.stringify(response.data.data));
+        return response.data;
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        throw error
+      }
+    }
+
     const googleSignIn = () => {
       setLoading(true);
       return signInWithPopup(auth, googleProvider);
@@ -29,7 +57,7 @@ import {
       setLoading(true);
       signOut(auth)
         .then(() => {
-          localStorage.removeItem("token"); // Remove token from local storage
+          localStorage.removeItem("token");
           setUser(null);
         })
         .catch((error) => {
@@ -50,12 +78,24 @@ import {
       };
     }, []);
   
+    const getUser = () => {
+      const u = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+      if (!u || !u.id) {
+        return false;
+      } else {
+        return u;
+      }
+    }
+
     const authInfo = {
       user,
       setUser,
       loading,
       logOut,
       googleSignIn,
+      login,
+      getUser,
+      signup
     };
   
     return (
