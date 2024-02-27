@@ -13,26 +13,10 @@ function AddTask() {
   const {getUser} = useContext(AuthContext);
   
   useEffect(() => {
-    // const fetchNote = async () => {
-    //   try {
-    //     const response = await axios.get(`http://localhost:3000/notes/${id}`);
-    //     const fetchedNoteData = response.data;
-    //     setNoteData(fetchedNoteData);
-    //     if (fetchedNoteData && fetchedNoteData.Tasks) {
-    //       setTaskList(fetchedNotedData.Tasks.map((task) => task.task));
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching note:", error);
-    //   }
-    // };
-
-    // fetchNote();
+ 
   }, []);
 
   console.log(noteData);
-  // const onChangeTask = (val) => {
-  //   setTask(val);
-  // };
 
   const handleAddTask = async () => {
     try {
@@ -122,24 +106,24 @@ function AddTask() {
                 placeholder="Type here"
                 className="input input-bordered w-full "
                 onChange={(e) => setTask(e.target.value)}
-                value={task} // Bind the input value to the task state
+                value={task}
               />
             </label>
             <div className="flex justify-center items-center gap-3 mt-5 flex-wrap mb-5 md:mb-0">
               <button
-                className="btn btn-primary text-white font-semibold"
+                className="btn bg-customBlue text-white font-semibold"
                 onClick={handleAddTask}
               >
                 Add Task
               </button>
               <button
-                className="btn btn-success text-white font-semibold"
+                className="btn bg-customPink text-gray font-semibold"
                 onClick={handleSaveTask}
               >
                 Save Tasks
               </button>
               <Link to={`/Notes/viewNote/${id}`}>
-                <button className="btn btn-warning text-white font-semibold">
+                <button className="btn bg-customOrange text-white font-semibold">
                   Return
                 </button>
               </Link>

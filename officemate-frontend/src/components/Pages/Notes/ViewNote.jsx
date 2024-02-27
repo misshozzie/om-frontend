@@ -72,12 +72,12 @@ function ViewNote(){
         <div className="mx-20 mt-10 mb-[28vh]">
           <div className="flex justify-end">
             <Link to={`/Notes/addTask/${id}`}>
-              <button className="btn btn-primary text-white font-semibold mb-9">
+              <button className="btn bg-customOrange text-white font-semibold mb-9">
                 Add Task +
               </button>
             </Link>
           </div>
-          <div className="card  shadow-2xl border-4 border-black">
+          <div className="card  shadow-2xl border-4 border-customBlue">
             <div className="grid grid-cols-1 md:grid-cols-2 ">
               <div className="md:border-r-4 border-b-4">
                 <div className="card-body">
@@ -93,11 +93,11 @@ function ViewNote(){
                       state: { from: "/Notes/viewNote" },
                     }}
                   >
-                    <button className="btn btn-warning text-white">Update</button>
+                    <button className="btn bg-customBlue text-white">Update</button>
                   </Link>
     
                   <button
-                    className="btn btn-error text-white"
+                    className="btn bg-customOrange text-white"
                     onClick={handleDeleteBtn}
                   >
                     Delete
@@ -117,10 +117,10 @@ function ViewNote(){
                       &nbsp;
                       &nbsp;
                       <button
-                      className="btn btn-error text-white"
+                      className="btn  btn-circle bg-customOrange text-white text-xs"
                       onClick={() => {handleDeleteTaskBtn(val._id)}}
                       >
-                        Delete
+                        X
                       </button>
                       </li> 
                     ))}

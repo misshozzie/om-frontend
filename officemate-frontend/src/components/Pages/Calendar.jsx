@@ -46,7 +46,6 @@ function Calendar() {
     }
   };
 
-  // console.log(allEvents);
 
   return (
     <div className="mx-10 mt-8">

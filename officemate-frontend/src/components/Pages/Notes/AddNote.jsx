@@ -10,10 +10,10 @@ import {AuthContext} from "../../../components/Pages/Users/Authprovider";
 function AddNote({ setRender, render }) {
   const {getUser} = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState("");
-  const [formState, setFormState] = useState({});
-  const [disabled, setDisabled] = useState(true);
-  const [errors, setErrors] = useState({});
-  // const { postData, data, isLoading, error } = newNote();
+  //const [formState, setFormState] = useState({});
+  //const [disabled, setDisabled] = useState(true);
+  //const [errors, setErrors] = useState({});
+
   const navigate = useNavigate();
 
   let query = new URLSearchParams(window.location.search);

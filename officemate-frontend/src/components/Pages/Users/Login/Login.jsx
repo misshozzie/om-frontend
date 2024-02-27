@@ -10,7 +10,6 @@ import {
 import { AuthContext } from "../Authprovider";
 import { validateEmail } from "../../../../services/utils";
 import SocialLogin from "../SocialLogin";
-import { hashDataWithSaltRounds, storeToken } from "../../../../util/security";
 import "../Login/Login.css";
 
 function Login() {
@@ -22,7 +21,7 @@ function Login() {
   const [allUser, setAllUser] = useState([]);
 
   useEffect(() => {
-    // Function to fetch all users from the server
+    
     const fetchAllUsers = async () => {
       try {
         const response = await axios.get("http://localhost:3000/user/login");
@@ -32,7 +31,7 @@ function Login() {
       }
     };
 
-    // fetchAllUsers();
+ 
   }, []);
 
   if (navigation.state === "loading") {
@@ -41,7 +40,7 @@ function Login() {
 
   const onFinish = async ({ email, password }) => {
     try {
-      // console.log(email,password);
+   
       const resp = await login(email, password);
       if (resp.success)
       {
@@ -55,9 +54,7 @@ function Login() {
       else{
         message.warning("Wrong username or password!");
       }
-      // const foundUser = allUser.find((u) => u.email === email);
-      // setUser(foundUser);
-
+   
       
     } catch (error) {
       console.error("Login failed:", error.response.data.errorMsg);
@@ -92,18 +89,7 @@ function Login() {
 
         await login(user.email, 'dummy');
         navigate(from, { replace: true });
-        //   .post("http://localhost:3000/user", saveUser, {
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //   })
-        //   .then(() => {
-        //     message.success("Login successful"); // Display success message
-        //     navigate(from, { replace: true });
-        //   })
-        //   .catch((error) => {
-        //     console.error("Error posting user data:", error);
-        //   });
+
     }
     catch(error){
         console.error("Google sign-in error:", error.message);
@@ -140,7 +126,7 @@ function Login() {
             rules={[
               {
                 required: true,
-                message: "Please input your email!",
+                message: "Please enter your email!",
               },
               {
                 validator: (rule, value) => {
@@ -155,7 +141,7 @@ function Login() {
             ]}
           >
             <Input
-              className="py-2 text-center username-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium"
+              className="py-2 text-center username-input placeholder:text-customBeige bg-customOrange border-4 rounded-none border-customPink text-black font-medium"
               placeholder="Enter your email"
             />
           </Form.Item>
@@ -171,7 +157,7 @@ function Login() {
             ]}
           >
             <Input.Password
-              className="py-2 text-center password-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customBeige text-white font-medium signup-password"
+              className="py-2 text-center password-input placeholder:text-customBlue bg-customPink border-4 rounded-none border-customPink text-white font-medium signup-password"
               placeholder="Enter your password"
             />
           </Form.Item>

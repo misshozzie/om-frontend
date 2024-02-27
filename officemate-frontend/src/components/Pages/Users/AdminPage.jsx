@@ -49,8 +49,8 @@ function AdminPage() {
           {/* head */}
           <thead>
             <tr className="font-semibold text-center text-lg">
-              <th>SL</th>
-              <th>Email</th>
+              <th>No.</th>
+              <th>Email Addresses</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -60,7 +60,7 @@ function AdminPage() {
                 <th>{index + 1}</th>
                 <td className="font-medium">{user.email}</td>
                 <td>
-                  <button className="btn btn-sm btn-error text-white font-semibold" onClick={() => handleDeleteBtn(user._id)}>
+                  <button className="btn btn-sm bg-customOrange text-white font-semibold" onClick={() => handleDeleteBtn(user._id)}>
                     Delete
                   </button>
                 </td>
