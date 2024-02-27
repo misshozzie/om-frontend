@@ -6,12 +6,14 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { firebase } from "../../firebase/firebase.config";
+//import { firebase } from "../../firebase/firebase.config";
+//import { firebaseConfig } from '../../../firebase/firebase.config';
+import { initializeApp } from "firebase/app";
 import axios from "axios";
 
 export const AuthContext = createContext(null);
 
-const auth = getAuth(firebase);
+const auth = getAuth(initializeApp);
 
 
 function AuthProvider({ children }) {
