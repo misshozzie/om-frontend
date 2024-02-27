@@ -291,11 +291,11 @@ return (
           >
             Submit
           </Button>
-          {/* <SocialLogin.Google
+          <SocialLogin.Google
             onClick={handleGoogle}
             className="mt-8"
             title="Sign up with Google"
-          /> */}
+          />
         </div>
       </Form>
     </div>
