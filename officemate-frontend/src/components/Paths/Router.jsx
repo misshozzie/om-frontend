@@ -5,7 +5,7 @@ import NavBar from "../Layout/NavBar";
 import UpdateProfile from "../Pages/Users/UpdateProfile";
 import Widgets from "../Pages/Widgets"
 import Converter from "../Pages/Converter/Converter";
-import Login from "../Pages/Users/Login/Login";
+import Login from"../Pages/Users/Login/Login";
 import Calendar from "../Pages/Calendar";
 import Note from "../Pages/Notes/Note";
 import AddNote from "../Pages/Notes/AddNote";

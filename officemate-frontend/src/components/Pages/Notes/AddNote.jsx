@@ -2,10 +2,10 @@ import { Checkbox, DatePicker, Form, Input, message } from "antd";
 import Lottie from "lottie-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useContext } from "react";
-import {AuthContext} from "../Users/Authprovider";
 import axios from "axios";
 import addnotes from "../../../assets/styles/addnotes.json";
+import { useContext } from "react";
+import {AuthContext} from "../../../components/Pages/Users/Authprovider";
 
 function AddNote({ setRender, render }) {
   const {getUser} = useContext(AuthContext);
@@ -13,7 +13,7 @@ function AddNote({ setRender, render }) {
   const [formState, setFormState] = useState({});
   const [disabled, setDisabled] = useState(true);
   const [errors, setErrors] = useState({});
-  //const { postData, data, isLoading, error } = newNote();
+  // const { postData, data, isLoading, error } = newNote();
   const navigate = useNavigate();
 
   let query = new URLSearchParams(window.location.search);
@@ -23,13 +23,6 @@ function AddNote({ setRender, render }) {
     setSelectedDate(dateString);
   };
 
-  // function handleChange(e) {
-  //   let currentForm = formState;
-  //   currentForm[evt.target.name] = e.target.value;
-  //   setDisabled(validate());
-  //   setFormState(currentForm);
-  // }
-
   const onFinish = async (values) => {
     try {
       const { title, user, calendar } = values;
@@ -38,21 +31,21 @@ function AddNote({ setRender, render }) {
         Title: title,
         Date: selectedDate,
         Description: user.description,
-        Calendar: calendar,
+        isEvent: calendar,
         Tasks: [],
       };
       console.log(newNote);
-
+    
       let config = {
         headers: {
           'Authorization': 'Bearer ' + getUser().token
         }
-      }      
+      }
     
       const response = await axios.post(
         "http://localhost:3000/notes/create",
-        newNote,
-        config
+          newNote,
+          config
       );
     
       if (response.status === 201) {

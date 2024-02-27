@@ -33,14 +33,14 @@ function ViewNote(){
     
       const handleDeleteBtn = async () => {
         try {
-        
+          // Send a DELETE request to the server route with the note ID
           const response = await axios.delete(`http://localhost:3000/notes/${id}`);
           if (response.status === 200) {
-          
+            // If the deletion is successful, you can perform additional actions if needed
             message.success("Note deleted successfully!");
             navigate(from, { replace: true });
     
-           
+            // Optionally, you can navigate to another page or update the UI
           }
         } catch (error) {
           message.error("Error deleting note");
@@ -52,14 +52,14 @@ function ViewNote(){
       const handleDeleteTaskBtn = async (taskId) => {
         // console.log(taskId);
         try {
-         
+          // Send a DELETE request to the server route with the note ID
           const response = await axios.delete(`http://localhost:3000/tasks/${taskId}`);
           if (response.status === 200) {
-          
+            // If the deletion is successful, you can perform additional actions if needed
             message.success("Task deleted successfully!");
             navigate(from, { replace: true });
     
-        
+            // Optionally, you can navigate to another page or update the UI
           }
         } catch (error) {
           message.error("Error deleting Task");

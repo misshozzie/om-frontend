@@ -4,12 +4,13 @@ import { AuthContext } from "../Pages/Users/Authprovider";
 import OfficematesLogo from "../../assets/images/omlogo2.png"; 
 
 const NavBar = ({ username, setUser }) => {
-  const { user, getUser } = useContext(AuthContext);
+  const { user ,getUser} = useContext(AuthContext);
 
   const navigate = useNavigate();
   useEffect(() => {
     const user = getUser();
-    if (username) {
+    console.log(user);
+    if ( getUser() ) {
       navigate(`/widgets`);
     } else {
       console.log("navigating");
@@ -20,8 +21,6 @@ const NavBar = ({ username, setUser }) => {
   const logout = async () => {
     try {
       localStorage.removeItem("user")
-      //logoutUser();
-      //setUser(null);
       navigate("/login");
     } catch (error) {
     }
@@ -63,8 +62,8 @@ const NavBar = ({ username, setUser }) => {
                 </>
               )}
               <li>
-              {getUser()?
-
+                {getUser()?
+                
                 <details>
                   <summary>MENU</summary>
                   <ul className="p-3 bg-customBlue rounded-t-none">
@@ -85,7 +84,8 @@ const NavBar = ({ username, setUser }) => {
                     </li>
                   </ul>
                 </details>
-                : "" }
+                : "" 
+                }
               </li>
               <li>
                 <Link to="/widgets"
@@ -108,6 +108,11 @@ const NavBar = ({ username, setUser }) => {
                       <Link to="/adminPage">DASHBOARD</Link>
                     </li>
                   )}
+                  {/* <li>
+                    <Link to="/" onClick={logout}>
+                      LOGOUT
+                    </Link>
+                  </li> */}
                 </>
               )}
             </ul>
@@ -117,6 +122,7 @@ const NavBar = ({ username, setUser }) => {
         </div>
         <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal md:px-1">
+
 
             {getUser()?
             <li>
@@ -141,7 +147,8 @@ const NavBar = ({ username, setUser }) => {
                 </ul>
               </details>
             </li>
-            : "" }
+            : ""
+            }
             { getUser() ?
               <li>
                 <Link to="/widgets">WIDGETS</Link>
@@ -180,6 +187,11 @@ const NavBar = ({ username, setUser }) => {
                     <Link to="/adminPage">DASHBOARD</Link>
                   </li>
                 )}
+                {/* <li>
+                  <Link to="/login" onClick={logout}>
+                    LOGOUT
+                  </Link>
+                </li> */}
               </>
             )}
 

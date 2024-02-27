@@ -3,7 +3,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 /*=== GET ALL NOTES === */
 export function getAllNotes() {
-
+  //
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [data, setData] = useState([]);
@@ -107,12 +107,13 @@ export function deleteNote() {
 
 /*=== DELETE NOTE === */
 export function getOneNote() {
+  //
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [data, setData] = useState({});
 
-  async function getOneData(username, id) {
-    const fullURL = `${BASE_URL}/notes/one/${username}?noteid=${id}`;
+  async function getOneData(username, noteid) {
+    const fullURL = `${BASE_URL}/notes/one/${username}?noteid=${noteid}`;
 
     const token = localStorage.getItem("token");
     setIsLoading(true);
@@ -139,9 +140,9 @@ export function getOneNote() {
   return { getOneData, data, isLoading, error };
 }
 
-/*=== UPDATE NOTE === */
-export function updateNote() {
-
+/*=== UPDATE ONE NOTE === */
+export function updateOneNote() {
+  //
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [data, setData] = useState({});

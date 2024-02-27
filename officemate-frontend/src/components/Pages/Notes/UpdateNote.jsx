@@ -1,18 +1,20 @@
 import {  DatePicker, Form, Input, message } from "antd";
 import Lottie from "lottie-react";
-import update from "../../../../../assets/update.json";
+//import update from "../../../../../assets/update.json";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { AuthContext } from "../Users/Authprovider";
 import { useContext } from "react";
-import axios from "axios";
+
 
 function UpdateNote() {
   const [selectedDate, setSelectedDate] = useState("");
   const [noteData, setNoteData] = useState([]);
   const {getUser} = useContext(AuthContext)
-  
+
   const { id } = useParams();
+
 
   useEffect(() => {
     const fetchNote = async () => {
@@ -22,13 +24,11 @@ function UpdateNote() {
             'Authorization': 'Bearer ' + getUser().token
           }
         }
-        const response = await axios.get(`http://localhost:3000/notes/${id}`,config);
-        //const fetchedNoteData = response.data;
+        const response = await axios.get(`http://localhost:3000/notes/one/${id}`,config);
         console.log(response.data);
-        setNoteData(fetchedNoteData);
         setNoteData(response.data);
       } catch (error) {
-        console.error("Error fetching note:", error);
+        console.error("Error fetching notes:", error);
       }
     };
 
@@ -40,26 +40,20 @@ function UpdateNote() {
   };
 
   const onFinish = async (values) => {
-    //console.log(values.user?.description)
     console.log(values)
     try {
-      const data = {
-        // const response = await axios.put(
-        //   `http://localhost:3000/notes/update/${id}`,
-        //   {
-            Title: values?.title || noteData.Title,
-            Date: selectedDate && selectedDate || noteData.Date,
-            Description: values.user?.description || noteData.Description,
-            Calendar: noteData.Calendar,
-            Tasks: noteData.Tasks
+        const data = {
+          Title: values?.Title || noteData.Title,
+          Date: selectedDate && selectedDate || noteData.Date,
+          Description: values?.Description || noteData.Description,
+          Calendar: noteData.Calendar,
+          Tasks: noteData.Tasks
+        }
+        let config = {
+          headers: {
+            'Authorization': 'Bearer ' + getUser().token
           }
-          let config = {
-            headers: {
-              'Authorization': 'Bearer ' + getUser().token
-            }
-          }
-
-        //console.log(response)
+        }
         console.log(data);
         const response = await axios.patch(
           `http://localhost:3000/notes/${id}`,
@@ -70,10 +64,12 @@ function UpdateNote() {
         console.log(response)
         if (response.status === 200) {
           message.success("Note updated successfully!");
+          // Optionally, you can navigate to another page or update the UI
         }
       } catch (error) {
         message.error("Error updating note");
         console.error(error);
+        // Handle errors if the update fails
       }
   };
   const onFinishFailed = (errorInfo) => {
@@ -94,7 +90,7 @@ function UpdateNote() {
         >
           <Form.Item
             label="Title"
-            name="title"
+            name="Title"
           >
             <Input placeholder={noteData.Title}/>
           </Form.Item>
@@ -112,7 +108,6 @@ function UpdateNote() {
 
           <Form.Item
             label="Description"
-            //name={["user", "description"]}
             name={"Description"}
           >
             <Input.TextArea placeholder={noteData.Description}/>
@@ -121,7 +116,7 @@ function UpdateNote() {
           <div className="flex gap-2 justify-center">
             <Link to="/Notes">
               <button
-                className="btn btn-wide bg-customBlue text-white"
+                className="btn btn-wide btn-warning text-white"
                 id="customizeBtn"
               >
                 View Note
@@ -130,7 +125,7 @@ function UpdateNote() {
             <Form.Item>
               <button 
                 type="submit"
-                className="btn btn-wide bg-customOrange text-white"
+                className="btn btn-wide btn-primary text-white"
               >
                 Update Note
               </button>
@@ -138,11 +133,11 @@ function UpdateNote() {
           </div>
         </Form>
       </div>
-      <Lottie
+      {/* <Lottie
         animationData={update}
         loop={true}
         style={{ width: "400px", height: "auto" }}
-      />
+      /> */}
     </div>
   );
 };

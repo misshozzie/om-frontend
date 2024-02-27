@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { message } from "antd";
 import axios from "axios";
 import { AuthContext } from "../Users/Authprovider";
 
 function AddTask() {
-  const [task, setTask] = useState("");
+  const [task, setTask] = useState();
+  const [title, setTitle] = useState();
   const [taskList, setTaskList] = useState([]);
   const [noteData, setNoteData] = useState([]);
   const { id } = useParams();
-  const { getUser } = useContext(AuthContext);
-
+  const {getUser} = useContext(AuthContext);
+  
   useEffect(() => {
     // const fetchNote = async () => {
     //   try {
@@ -24,41 +25,40 @@ function AddTask() {
     //     console.error("Error fetching note:", error);
     //   }
     // };
+
     // fetchNote();
   }, []);
 
   console.log(noteData);
-  //const onChangeTask = (val) => {
-  // setTask(val);
-  //};
+  // const onChangeTask = (val) => {
+  //   setTask(val);
+  // };
 
   const handleAddTask = async () => {
     try {
+
       const data = {
         Title: title,
         Task: task,
-        NoteId: id,
+        NoteId: id
       };
 
+    
       let config = {
         headers: {
-          Authorization: "Bearer " + getUser().token,
-        },
-      };
+          'Authorization': 'Bearer ' + getUser().token
+        }
+      }
+    
       const response = await axios.post(
         "http://localhost:3000/tasks/create",
-        data,
-        config
+          data,
+          config
       );
-
-      //   if (task.trim() !== "") {
-      //     const newTaskList = [...taskList, task];
-      //     setTaskList(newTaskList);
-      //     // setTask("");
-      //   }
-      // };
+    
       if (response.status === 201) {
         message.success("Task created successfully");
+
       } else {
         message.error("Failed to create Task");
       }
@@ -88,6 +88,7 @@ function AddTask() {
       });
 
       message.success("Tasks Added Successfully!");
+      // setTaskList([]); // Clear the task list array
     } catch (error) {
       console.error("Error saving tasks:", error);
       message.error("Failed to save tasks. Please try again later.");
@@ -109,7 +110,7 @@ function AddTask() {
                 placeholder="Type here"
                 className="input input-bordered w-full "
                 onChange={(e) => setTitle(e.target.value)}
-                value={title}
+                value={title} 
               />
             </label>
             <label className="form-control w-full md:max-w-fit">
@@ -120,27 +121,28 @@ function AddTask() {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered w-full "
-                onChange={(e) => onChangeTask(e.target.value)}
+                onChange={(e) => setTask(e.target.value)}
                 value={task} // Bind the input value to the task state
               />
             </label>
             <div className="flex justify-center items-center gap-3 mt-5 flex-wrap mb-5 md:mb-0">
-              <button className="btn bg-customBeige text-gray font-semibold">
-                Return
-              </button>
               <button
-                className="btn bg-customBlue text-white font-semibold"
+                className="btn btn-primary text-white font-semibold"
                 onClick={handleAddTask}
               >
                 Add Task
               </button>
               <button
-                className="btn bg-customOrange text-white font-semibold"
+                className="btn btn-success text-white font-semibold"
                 onClick={handleSaveTask}
               >
                 Save Tasks
               </button>
-              <Link to={`/Notes/viewNote/${id}`}></Link>
+              <Link to={`/Notes/viewNote/${id}`}>
+                <button className="btn btn-warning text-white font-semibold">
+                  Return
+                </button>
+              </Link>
             </div>
           </div>
           <div className="ps-10 py-5">

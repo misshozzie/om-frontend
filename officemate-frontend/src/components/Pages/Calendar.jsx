@@ -26,28 +26,27 @@ function Calendar() {
       if (res) {
         const events = []
         res.data.map((data) => {
-          if (data.Calendar) {
+          if (data.isEvent) {
             const event = {
               title: data.Title,
               start: data.Date,
               extendedProps: {
                 description: data.Description,
-                calendar: data.Calendar,
-                tasks: data.Tasks,
+                tasks: data.Tasks
               },
             };
             events.push(event)
             
           }
         });
-        setAllEvents((prev) => [...prev, event]);
+        setAllEvents((prev) => events);
       }
     } catch (error) {
       console.log("🚀 ~ getEvent ~ error:", error);
     }
   };
 
-  //console.log(allEvents);
+  // console.log(allEvents);
 
   return (
     <div className="mx-10 mt-8">
