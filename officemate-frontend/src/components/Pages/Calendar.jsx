@@ -3,18 +3,28 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import axios from "axios";
+import { useContext } from "react";
 import { useEffect, useState } from "react";
+import { AuthContext } from "./Users/Authprovider";
 
 function Calendar() {
   const [allEvents, setAllEvents] = useState([]);
+  const {getUser} = useContext(AuthContext);
 
   useEffect(() => {
     getEvent();
   }, []);
   const getEvent = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/notes");
+      let config = {
+        headers: {
+          'Authorization': 'Bearer ' + getUser().token
+        }
+      }
+      const res = await axios.get("http://localhost:3000/notes/all",config);
+
       if (res) {
+        const events = []
         res.data.map((data) => {
           if (data.Calendar) {
             const event = {
@@ -26,16 +36,18 @@ function Calendar() {
                 tasks: data.Tasks,
               },
             };
-            setAllEvents((prev) => [...prev, event]);
+            events.push(event)
+            
           }
         });
+        setAllEvents((prev) => [...prev, event]);
       }
     } catch (error) {
       console.log("🚀 ~ getEvent ~ error:", error);
     }
   };
 
-  console.log(allEvents);
+  //console.log(allEvents);
 
   return (
     <div className="mx-10 mt-8">

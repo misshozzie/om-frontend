@@ -2,40 +2,69 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { message } from "antd";
 import axios from "axios";
+import { AuthContext } from "../Users/Authprovider";
 
 function AddTask() {
   const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
   const [noteData, setNoteData] = useState([]);
   const { id } = useParams();
+  const { getUser } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchNote = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/notes/${id}`);
-        const fetchedNoteData = response.data;
-        setNoteData(fetchedNoteData);
-        if (fetchedNoteData && fetchedNoteData.Tasks) {
-          setTaskList(fetchedNotedData.Tasks.map((task) => task.task));
-        }
-      } catch (error) {
-        console.error("Error fetching note:", error);
-      }
-    };
-
-    fetchNote();
-  }, [id]);
+    // const fetchNote = async () => {
+    //   try {
+    //     const response = await axios.get(`http://localhost:3000/notes/${id}`);
+    //     const fetchedNoteData = response.data;
+    //     setNoteData(fetchedNoteData);
+    //     if (fetchedNoteData && fetchedNoteData.Tasks) {
+    //       setTaskList(fetchedNotedData.Tasks.map((task) => task.task));
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching note:", error);
+    //   }
+    // };
+    // fetchNote();
+  }, []);
 
   console.log(noteData);
-  const onChangeTask = (val) => {
-    setTask(val);
-  };
+  //const onChangeTask = (val) => {
+  // setTask(val);
+  //};
 
-  const handleAddTask = () => {
-    if (task.trim() !== "") {
-      const newTaskList = [...taskList, task];
-      setTaskList(newTaskList);
-      // setTask("");
+  const handleAddTask = async () => {
+    try {
+      const data = {
+        Title: title,
+        Task: task,
+        NoteId: id,
+      };
+
+      let config = {
+        headers: {
+          Authorization: "Bearer " + getUser().token,
+        },
+      };
+      const response = await axios.post(
+        "http://localhost:3000/tasks/create",
+        data,
+        config
+      );
+
+      //   if (task.trim() !== "") {
+      //     const newTaskList = [...taskList, task];
+      //     setTaskList(newTaskList);
+      //     // setTask("");
+      //   }
+      // };
+      if (response.status === 201) {
+        message.success("Task created successfully");
+      } else {
+        message.error("Failed to create Task");
+      }
+    } catch (error) {
+      message.error("Failed to create Task. Please try again later.");
+      console.error("Error creating Task:", error);
     }
   };
 
@@ -59,7 +88,6 @@ function AddTask() {
       });
 
       message.success("Tasks Added Successfully!");
-      // setTaskList([]); // Clear the task list array
     } catch (error) {
       console.error("Error saving tasks:", error);
       message.error("Failed to save tasks. Please try again later.");
@@ -80,6 +108,8 @@ function AddTask() {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered w-full "
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
               />
             </label>
             <label className="form-control w-full md:max-w-fit">
@@ -95,23 +125,22 @@ function AddTask() {
               />
             </label>
             <div className="flex justify-center items-center gap-3 mt-5 flex-wrap mb-5 md:mb-0">
+              <button className="btn bg-customBeige text-gray font-semibold">
+                Return
+              </button>
               <button
-                className="btn btn-primary text-white font-semibold"
+                className="btn bg-customBlue text-white font-semibold"
                 onClick={handleAddTask}
               >
                 Add Task
               </button>
               <button
-                className="btn btn-success text-white font-semibold"
+                className="btn bg-customOrange text-white font-semibold"
                 onClick={handleSaveTask}
               >
                 Save Tasks
               </button>
-              <Link to={`/Notes/viewNote/${id}`}>
-                <button className="btn btn-warning text-white font-semibold">
-                  Return
-                </button>
-              </Link>
+              <Link to={`/Notes/viewNote/${id}`}></Link>
             </div>
           </div>
           <div className="ps-10 py-5">

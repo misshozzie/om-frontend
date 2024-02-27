@@ -1,16 +1,19 @@
 import { Checkbox, DatePicker, Form, Input, message } from "antd";
 import Lottie from "lottie-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useContext } from "react";
+import {AuthContext} from "../Users/Authprovider";
 import axios from "axios";
 import addnotes from "../../../assets/styles/addnotes.json";
 
 function AddNote({ setRender, render }) {
+  const {getUser} = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState("");
   const [formState, setFormState] = useState({});
   const [disabled, setDisabled] = useState(true);
   const [errors, setErrors] = useState({});
-  const { postData, data, isLoading, error } = newNote();
+  //const { postData, data, isLoading, error } = newNote();
   const navigate = useNavigate();
 
   let query = new URLSearchParams(window.location.search);
@@ -19,6 +22,13 @@ function AddNote({ setRender, render }) {
   const dateChange = (date, dateString) => {
     setSelectedDate(dateString);
   };
+
+  // function handleChange(e) {
+  //   let currentForm = formState;
+  //   currentForm[evt.target.name] = e.target.value;
+  //   setDisabled(validate());
+  //   setFormState(currentForm);
+  // }
 
   const onFinish = async (values) => {
     try {
@@ -31,11 +41,18 @@ function AddNote({ setRender, render }) {
         Calendar: calendar,
         Tasks: [],
       };
+      console.log(newNote);
 
+      let config = {
+        headers: {
+          'Authorization': 'Bearer ' + getUser().token
+        }
+      }      
     
       const response = await axios.post(
         "http://localhost:3000/notes/create",
-        newNote
+        newNote,
+        config
       );
     
       if (response.status === 201) {

@@ -4,21 +4,24 @@ import { AuthContext } from "../Pages/Users/Authprovider";
 import OfficematesLogo from "../../assets/images/omlogo2.png"; 
 
 const NavBar = ({ username, setUser }) => {
-  const { user } = useContext(AuthContext);
+  const { user, getUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
   useEffect(() => {
+    const user = getUser();
     if (username) {
-      navigate(`user/widgets?username=${username}`);
+      navigate(`/widgets`);
     } else {
+      console.log("navigating");
       navigate("/login");
     }
   }, []);
   
   const logout = async () => {
     try {
-      logoutUser();
-      setUser(null);
+      localStorage.removeItem("user")
+      //logoutUser();
+      //setUser(null);
       navigate("/login");
     } catch (error) {
     }
@@ -60,6 +63,8 @@ const NavBar = ({ username, setUser }) => {
                 </>
               )}
               <li>
+              {getUser()?
+
                 <details>
                   <summary>MENU</summary>
                   <ul className="p-3 bg-customBlue rounded-t-none">
@@ -80,6 +85,7 @@ const NavBar = ({ username, setUser }) => {
                     </li>
                   </ul>
                 </details>
+                : "" }
               </li>
               <li>
                 <Link to="/widgets"
@@ -102,11 +108,6 @@ const NavBar = ({ username, setUser }) => {
                       <Link to="/adminPage">DASHBOARD</Link>
                     </li>
                   )}
-                  <li>
-                    <Link to="/" onClick={logout}>
-                      LOGOUT
-                    </Link>
-                  </li>
                 </>
               )}
             </ul>
@@ -116,23 +117,8 @@ const NavBar = ({ username, setUser }) => {
         </div>
         <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal md:px-1">
-            {!user && (
-              <li>
-                <h1 className="italic">
-                  Login
-                  <NavLink to="/login" className="link link-primary text-white">
-                    here!
-                  </NavLink>
-                  Not yet a member?
-                  <NavLink
-                    to="/signup"
-                    className="link link-primary text-white"
-                  >
-                    Join us now!
-                  </NavLink>
-                </h1>
-              </li>
-            )}
+
+            {getUser()?
             <li>
               <details>
                 <summary>MENU</summary>
@@ -155,9 +141,29 @@ const NavBar = ({ username, setUser }) => {
                 </ul>
               </details>
             </li>
-            <li>
-              <Link to="/widgets">WIDGETS</Link>
+            : "" }
+            { getUser() ?
+              <li>
+                <Link to="/widgets">WIDGETS</Link>
+              </li>
+              : 
+              <li>
+              <h1 className="italic">
+                Login
+                <NavLink to="/login" className="link link-primary text-white">
+                  here!
+                </NavLink>
+                Not yet a member?
+                <NavLink
+                  to="/signup"
+                  className="link link-primary text-white"
+                >
+                  Join us now!
+                </NavLink>
+              </h1>
             </li>
+  
+            }
             {user && user.auth && (
               <>
                 {user && user && user.role === "user" && (
@@ -174,13 +180,15 @@ const NavBar = ({ username, setUser }) => {
                     <Link to="/adminPage">DASHBOARD</Link>
                   </li>
                 )}
-                <li>
-                  <Link to="/" onClick={logout}>
-                    LOGOUT
-                  </Link>
-                </li>
               </>
             )}
+
+            { getUser() ?
+            <li>
+              <Link to="/login" onClick={logout}>Logout</Link>
+            </li>
+            : ""
+            }
           </ul>
         </div>
       </div>

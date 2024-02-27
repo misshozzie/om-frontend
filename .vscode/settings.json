@@ -6,7 +6,9 @@
         "Authprovider",
         "clsx",
         "daisyui",
+        "daygrid",
         "firebaseapp",
+        "fullcalendar",
         "isdelete",
         "JWTTH",
         "Nobg",
@@ -17,6 +19,7 @@
         "Signup",
         "tailwindcss",
         "taskid",
+        "timegrid",
         "wvkp"
     ]
 }
