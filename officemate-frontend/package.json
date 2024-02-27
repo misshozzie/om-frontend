@@ -30,7 +30,6 @@
     "localforage": "^1.10.0",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.4",
-    "moment": "^2.30.1",
     "multer": "^1.4.5-lts.1",
     "pdf-lib": "^1.17.1",
     "pdfkit": "^0.14.0",
@@ -39,7 +38,6 @@
     "react-google-calendar-api": "^2.3.0",
     "react-router-dom": "^6.22.1",
     "sort-by": "^0.0.2",
-    "sweetalert2": "^11.6.13",
     "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
