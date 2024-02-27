@@ -6,12 +6,12 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { app } from "../../firebase/firebase_config";
+import { firebase } from "../../firebase/firebase.config";
 import axios from "axios";
 
 export const AuthContext = createContext(null);
 
-const auth = getAuth(app);
+const auth = getAuth(firebase);
 
 
 function AuthProvider({ children }) {
@@ -77,15 +77,6 @@ function AuthProvider({ children }) {
       return unsubscribe();
     };
   }, []);
-  
-  // const getUser = () => {
-  //   const u = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
-  //   if (!u || !u.id) {
-  //     return false;
-  //   } else {
-  //     return u;
-  //   }
-  // }
 
   const getUser = () => {
     const userItem = localStorage.getItem("user");
