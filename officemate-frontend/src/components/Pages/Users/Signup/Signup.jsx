@@ -19,10 +19,23 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [disable, setDisable] = useState(true);
 
+  const handleInputChange = (e) => {
   const { googleSignIn,signup } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  const { name, value } = e.target;
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+  setDisable(checkPassword());
+};
+
+const togglePasswordVisibility = () => {
+  setShowPassword(!showPassword);
+};
 
 
 async function onSubmit(e) {

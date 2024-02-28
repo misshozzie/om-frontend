@@ -67,7 +67,7 @@ function AddTask() {
         })),
       };
       console.log(updatedNote);
-      await axios.put(`http://localhost:3000/notes/task/update/${id}`, {
+      await axios.put(`https://officemate-backend.onrender.com/notes/task/update/${id}`, {
         updatedTasks: updatedNote.Tasks,
       });
 
