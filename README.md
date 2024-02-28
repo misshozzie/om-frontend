@@ -115,10 +115,10 @@ The Officemate Web App user stories include features such as notes and tasks han
 ![App Screenshot](https://i.imgur.com/6WEyWgN.png)
 
 ### Notes
-![App Screenshot](https://i.imgur.com/VMB6OcT.png)
+![App Screenshot](https://i.imgur.com/rz0yvas.png)
 
 ### Single Note with task
-![App Screenshot](https://i.imgur.com/JMnUXhM.png)
+![App Screenshot](https://i.imgur.com/23WRFri.png)
 
 ### Task List
 ![App Screenshot](https://i.imgur.com/2JCA61h.png)
