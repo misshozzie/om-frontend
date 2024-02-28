@@ -26,7 +26,7 @@ function AuthProvider({ children }) {
     try {
 
       const data = {...user,role: "user"}
-      const response = await axios.post("http://localhost:3000/users/create",data);
+      const response = await axios.post("https://officemate-backend.onrender.com/users/create",data);
       return response.data;
       // console.log(response.data);
     } catch (error) {
@@ -38,7 +38,7 @@ function AuthProvider({ children }) {
   const login = async (email,password) => {
     try {
       const data = {email,password}
-      const response = await axios.post("http://localhost:3000/users/login",data);
+      const response = await axios.post("https://officemate-backend.onrender.com/users/login",data);
       // if (response.data.success)
       setUser(response.data);
       localStorage.setItem("user",JSON.stringify(response.data.data));

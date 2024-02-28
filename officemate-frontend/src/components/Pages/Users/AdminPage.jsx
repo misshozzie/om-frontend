@@ -10,7 +10,7 @@ function AdminPage() {
 
   const fetchAllUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/users/all");
+      const response = await axios.get("https://officemate-backend.onrender.com/users/all");
       const users = response.data.filter(user => user.role !== "admin");
       setAllUser(users);
     } catch (error) {
@@ -28,7 +28,7 @@ function AdminPage() {
   const handleDeleteBtn = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/user/delete/${id}`
+        `https://officemate-backend.onrender.com/user/delete/${id}`
       );
       if (response.status === 200) {
         message.success("User deleted successfully!");

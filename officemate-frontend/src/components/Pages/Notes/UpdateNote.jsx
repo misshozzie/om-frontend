@@ -56,7 +56,7 @@ function UpdateNote() {
         }
         console.log(data);
         const response = await axios.patch(
-          `http://localhost:3000/notes/${id}`,
+          `https://officemate-backend.onrender.com/notes/${id}`,
           data,
           config
         );

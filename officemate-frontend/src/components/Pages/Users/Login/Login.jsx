@@ -24,7 +24,7 @@ function Login() {
     
     const fetchAllUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/user/login");
+        const response = await axios.get("https://officemate-backend.onrender.com/user/login");
         setAllUser(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);

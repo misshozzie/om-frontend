@@ -11,7 +11,7 @@ function UpdateProfile() {
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/user");
+        const response = await axios.get("https://officemate-backend.onrender.com/user");
         const Data = response.data;
         const foundUser = Data.find((u) => u.email === email);
         setCurrentUser(foundUser);
@@ -28,7 +28,7 @@ function UpdateProfile() {
 
       // Make a PUT request to update the password
       const response = await axios.put(
-        `http://localhost:3000/user/update/${currentUser._id}`,
+        `https://officemate-backend.onrender.com/user/update/${currentUser._id}`,
         {
           newPassword: confirmPassword,
         }
