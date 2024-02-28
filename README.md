@@ -1,3 +1,4 @@
+
 ![Logo](https://i.imgur.com/h2YLX8g.png)
 
 
@@ -96,6 +97,31 @@ The Officemate Web App user stories include features such as notes and tasks han
 
 ## Favorite React
 - As usual, I enjoy designing the UI. My first time using TailwindCss and daisyUI. 
-## Author
 
-- [@hosannaikigai](https://www.instagram.com/hosannaikigai/)
+
+## WalkThrough
+
+
+### Homepage
+![App Screenshot](https://i.imgur.com/wDKJjcw.png)
+
+### Signin
+![App Screenshot](https://i.imgur.com/CUhEdDc.png)
+
+### Login
+![App Screenshot](https://i.imgur.com/gZKIlOu.png)
+
+### Add Notes
+![App Screenshot](https://i.imgur.com/6WEyWgN.png)
+
+### Notes
+![App Screenshot](https://i.imgur.com/VMB6OcT.png)
+
+### Single Note with task
+![App Screenshot](https://i.imgur.com/JMnUXhM.png)
+
+### Task List
+![App Screenshot](https://i.imgur.com/2JCA61h.png)
+
+### Calendar
+![App Screenshot](https://i.imgur.com/LFqjeTV.png)
