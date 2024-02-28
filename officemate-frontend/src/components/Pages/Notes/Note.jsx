@@ -18,7 +18,7 @@ function Note() {
           'Authorization': 'Bearer ' + getUser().token
         }
       }
-      const response = await axios.get("http://localhost:3000/notes/all",config);
+      const response = await axios.get("https://officemate-backend.onrender.com/notes/all",config);
       console.log(response.data);
       setAllNotes(response.data);
     } catch (error) {
