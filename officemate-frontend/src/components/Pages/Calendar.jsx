@@ -21,7 +21,7 @@ function Calendar() {
           'Authorization': 'Bearer ' + getUser().token
         }
       }
-      const res = await axios.get("http://localhost:3000/notes/all",config);
+      const res = await axios.get("https://officemate-backend.onrender.com/notes/all",config);
 
       if (res) {
         const events = []

@@ -20,7 +20,7 @@ function ViewNote(){
               'Authorization': 'Bearer ' + getUser().token
             }
           }
-          const response = await axios.get(`http://localhost:3000/notes/one/${id}`,config);
+          const response = await axios.get(`https://officemate-backend.onrender.com/notes/one/${id}`,config);
           console.log(response.data);
           setNoteData(response.data);
         } catch (error) {
@@ -34,7 +34,7 @@ function ViewNote(){
       const handleDeleteBtn = async () => {
         try {
           // Send a DELETE request to the server route with the note ID
-          const response = await axios.delete(`http://localhost:3000/notes/${id}`);
+          const response = await axios.delete(`https://officemate-backend.onrender.com/notes/${id}`);
           if (response.status === 200) {
             // If the deletion is successful, you can perform additional actions if needed
             message.success("Note deleted successfully!");
@@ -53,7 +53,7 @@ function ViewNote(){
         // console.log(taskId);
         try {
           // Send a DELETE request to the server route with the note ID
-          const response = await axios.delete(`http://localhost:3000/tasks/${taskId}`);
+          const response = await axios.delete(`https://officemate-backend.onrender.com/tasks/${taskId}`);
           if (response.status === 200) {
             // If the deletion is successful, you can perform additional actions if needed
             message.success("Task deleted successfully!");

@@ -38,7 +38,7 @@ function Note() {
         }
       }
       // Send a DELETE request to the server route with the note ID
-      const response = await axios.delete(`http://localhost:3000/notes/${id}`,config);
+      const response = await axios.delete(`https://officemate-backend.onrender.com/notes/${id}`,config);
       if (response.status === 200) {
 
         // If the deletion is successful, you can perform additional actions if needed

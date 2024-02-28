@@ -43,7 +43,7 @@ function AddNote({ setRender, render }) {
       }
     
       const response = await axios.post(
-        "http://localhost:3000/notes/create",
+        "https://officemate-backend.onrender.com/create",
           newNote,
           config
       );
