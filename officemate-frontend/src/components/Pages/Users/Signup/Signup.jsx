@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Button, Form, Input, message } from "antd";
 import { AuthContext } from "../Authprovider";
-import axios from "axios";
+//import axios from "axios";
 import { Link,useLocation ,NavLink, useNavigate } from "react-router-dom";
 import SocialLogin from "../SocialLogin";
 import "../../../../../src/index.css";
@@ -19,12 +19,12 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [disable, setDisable] = useState(true);
 
-  const handleInputChange = (e) => {
   const { googleSignIn,signup } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
+  const handleInputChange = (e) => {
   const { name, value } = e.target;
   setFormData((prevData) => ({
     ...prevData,
@@ -36,7 +36,6 @@ const Signup = () => {
 const togglePasswordVisibility = () => {
   setShowPassword(!showPassword);
 };
-
 
 async function onSubmit(e) {
   console.log(e);
@@ -78,7 +77,6 @@ function displayErrorMessage(msg) {
   alert(msg); 
 
 }
-
 
 return (
 
