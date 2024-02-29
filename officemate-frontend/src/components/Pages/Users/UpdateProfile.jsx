@@ -28,7 +28,7 @@ function UpdateProfile() {
 
       // Make a PUT request to update the password
       const response = await axios.put(
-        `process.env.VITE_BASE_URL + "/user/update/"${currentUser._id}`,
+        `${process.env.VITE_BASE_URL}/user/update/${currentUser._id}`,
         {
           newPassword: confirmPassword,
         }

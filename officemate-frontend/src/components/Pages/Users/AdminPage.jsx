@@ -28,7 +28,7 @@ function AdminPage() {
   const handleDeleteBtn = async (id) => {
     try {
       const response = await axios.delete(
-        `process.env.VITE_BASE_URL + "/user/delete/"${id}`
+        `${process.env.VITE_BASE_URL}/user/delete/${id}`
       );
       if (response.status === 200) {
         message.success("User deleted successfully!");
