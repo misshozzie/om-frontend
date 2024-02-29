@@ -52,7 +52,7 @@ function AuthProvider({ children }) {
 
   const googleSignIn = () => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider);
+    return signInWithPopup(auth, GoogleProvider);
   };
 
   const logOut = () => {
@@ -81,15 +81,14 @@ function AuthProvider({ children }) {
   }, []);
 
   const getUser = () => {
-    const userItem = localStorage.getItem("user");
-    if (userItem && userItem !== "undefined") {
-      const u = JSON.parse(userItem);
-      if (u && u.id) {
-        return u;
-      }
+    const u = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+    if (!u || !u.id) {
+      return false;
+    } else {
+      return u;
     }
-    return false;
-  };
+  }
+
   const authInfo = {
     user,
     setUser,
