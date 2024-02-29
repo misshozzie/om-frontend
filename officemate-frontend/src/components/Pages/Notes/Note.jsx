@@ -40,7 +40,9 @@ function Note() {
       }
       // Send a DELETE request to the server route with the note ID
       //const response = await axios.delete(`https://officemate-backend.onrender.com/notes/${id}`,config);
-      const response = await axios.delete(`process.env.VITE_BASE_URL + "/notes/"${id}`,config);
+      //const response = await axios.delete(`process.env.VITE_BASE_URL + "/notes/"${id}`,config);
+      const response = await axios.delete(`${process.env.VITE_BASE_URL}/notes/${id}`, config);
+
       if (response.status === 200) {
 
         // If the deletion is successful, you can perform additional actions if needed

@@ -10,39 +10,34 @@ function AddTask() {
   const [taskList, setTaskList] = useState([]);
   const [noteData, setNoteData] = useState([]);
   const { id } = useParams();
-  const {getUser} = useContext(AuthContext);
-  
-  useEffect(() => {
- 
-  }, []);
+  const { getUser } = useContext(AuthContext);
+
+  useEffect(() => {}, []);
 
   console.log(noteData);
 
   const handleAddTask = async () => {
     try {
-
       const data = {
         Title: title,
         Task: task,
-        NoteId: id
+        NoteId: id,
       };
 
-    
       let config = {
         headers: {
-          'Authorization': 'Bearer ' + getUser().token
-        }
-      }
-    
+          Authorization: "Bearer " + getUser().token,
+        },
+      };
+
       const response = await axios.post(
         process.env.VITE_BASE_URL + "/tasks/create",
-          data,
-          config
+        data,
+        config
       );
-    
+
       if (response.status === 201) {
         message.success("Task created successfully");
-
       } else {
         message.error("Failed to create Task");
       }
@@ -67,7 +62,7 @@ function AddTask() {
         })),
       };
       console.log(updatedNote);
-      await axios.put(`process.env.VITE_BASE_URL + "/notes/task/update/"${id}`, {
+      await axios.put(`${process.env.VITE_BASE_URL}/notes/task/update/${id}`, {
         updatedTasks: updatedNote.Tasks,
       });
 
@@ -94,7 +89,7 @@ function AddTask() {
                 placeholder="Type here"
                 className="input input-bordered w-full "
                 onChange={(e) => setTitle(e.target.value)}
-                value={title} 
+                value={title}
               />
             </label>
             <label className="form-control w-full md:max-w-fit">
