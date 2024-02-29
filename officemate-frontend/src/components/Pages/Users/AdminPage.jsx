@@ -10,7 +10,7 @@ function AdminPage() {
 
   const fetchAllUsers = async () => {
     try {
-      const response = await axios.get(process.env.VITE_BASE_URL + "/users/all");
+      const response = await axios.get(import.meta.env.VITE_BASE_URL + "/users/all");
       const users = response.data.filter(user => user.role !== "admin");
       setAllUser(users);
     } catch (error) {
@@ -28,7 +28,7 @@ function AdminPage() {
   const handleDeleteBtn = async (id) => {
     try {
       const response = await axios.delete(
-        `${process.env.VITE_BASE_URL}/user/delete/${id}`
+        `${import.meta.env.VITE_BASE_URL}/user/delete/${id}`
       );
       if (response.status === 200) {
         message.success("User deleted successfully!");

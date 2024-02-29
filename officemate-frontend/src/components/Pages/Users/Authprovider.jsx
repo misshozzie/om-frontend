@@ -26,7 +26,7 @@ function AuthProvider({ children }) {
     try {
 
       const data = {...user,role: "user"}
-      const response = await axios.post(process.env.VITE_BASE_URL +"/users/create",data);
+      const response = await axios.post(import.meta.env.VITE_BASE_URL +"/users/create",data);
       return response.data;
       // console.log(response.data);
     } catch (error) {
@@ -38,7 +38,7 @@ function AuthProvider({ children }) {
   const login = async (email,password) => {
     try {
       const data = {email,password}
-      const response = await axios.post(process.env.VITE_BASE_URL + "/users/login",data);
+      const response = await axios.post(import.meta.env.VITE_BASE_URL + "/users/login",data);
       // if (response.data.success)
       setUser(response.data);
       localStorage.setItem("user",JSON.stringify(response.data.data));
@@ -80,15 +80,31 @@ function AuthProvider({ children }) {
     };
   }, []);
 
+  // const getUser = () => {
+  //   const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+  //   if (!user || !user.id) {
+  //     return false;
+  //   } else {
+  //     return u;
+  //   }
+  // }
+
   const getUser = () => {
-    const u = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
-    if (!u || !u.id) {
+    try {
+      const userString = localStorage.getItem("user");
+      if (!userString) {
+        return false; // No user data in local storage
+      }
+      const userObj = JSON.parse(userString);
+      if (!userObj || !userObj.id) {
+        return false; // Invalid user data
+      }
+      return userObj;
+    } catch (error) {
+      console.error("Error parsing user from local storage:", error);
       return false;
-    } else {
-      return u;
     }
   }
-
   const authInfo = {
     user,
     setUser,

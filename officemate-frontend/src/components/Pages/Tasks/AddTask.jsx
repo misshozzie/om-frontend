@@ -31,7 +31,7 @@ function AddTask() {
       };
 
       const response = await axios.post(
-        process.env.VITE_BASE_URL + "/tasks/create",
+        import.meta.env.VITE_BASE_URL + "/tasks/create",
         data,
         config
       );
@@ -62,7 +62,7 @@ function AddTask() {
         })),
       };
       console.log(updatedNote);
-      await axios.put(`${process.env.VITE_BASE_URL}/notes/task/update/${id}`, {
+      await axios.put(`${import.meta.env.VITE_BASE_URL}/notes/task/update/${id}`, {
         updatedTasks: updatedNote.Tasks,
       });
 
