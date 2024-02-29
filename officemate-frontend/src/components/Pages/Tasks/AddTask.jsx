@@ -111,12 +111,12 @@ function AddTask() {
               >
                 Add Task
               </button>
-              <button
+              {/* <button
                 className="btn bg-customPink text-gray font-semibold"
                 onClick={handleSaveTask}
               >
                 Save Tasks
-              </button>
+              </button> */}
               <Link to={`/Notes/viewNote/${id}`}>
                 <button className="btn bg-customOrange text-white font-semibold">
                   Return
