@@ -67,6 +67,7 @@ function ViewNote(){
         }
       };
       console.log(noteData);
+      
       return (
         <div className="mx-20 mt-10 mb-[28vh]">
           <div className="flex justify-end">
