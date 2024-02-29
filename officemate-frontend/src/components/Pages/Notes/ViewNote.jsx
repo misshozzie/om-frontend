@@ -49,25 +49,50 @@ function ViewNote(){
         }
       };
       console.log(noteData);
-      const handleDeleteTaskBtn = async (taskId) => {
-        // console.log(taskId);
-        try {
-          // Send a DELETE request to the server route with the note ID
-          const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/tasks/${taskId}`);
-          if (response.status === 200) {
-            // If the deletion is successful, you can perform additional actions if needed
-            message.success("Task deleted successfully!");
-            navigate(from, { replace: true });
+
+      // const handleDeleteTaskBtn = async (taskId) => {
+      //   // console.log(taskId);
+      //   try {
+      //     // Send a DELETE request to the server route with the note ID
+      //     const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/tasks/${taskId}`);
+      //     if (response.status === 200) {
+      //       // If the deletion is successful, you can perform additional actions if needed
+      //       message.success("Task deleted successfully!");
+      //       navigate(from, { replace: true });
     
+      //     }
+      //   } catch (error) {
+      //     message.error("Error deleting Task");
+      //     console.error(error);
+      //     // Handle errors if the deletion fails
+      //   }
+      // };
+      // console.log(noteData);
+      
+      const handleDeleteTaskBtn = async (taskId) => {
+        try {
+          const config = {
+            headers: {
+              'Authorization': `Bearer ${getUser().token}`, // Assuming you have authentication
+            },
+          };
+          const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/tasks/${taskId}`, config);
+          if (response.status === 200) {
+            message.success("Task deleted successfully!");
+      
+            // Update local state to remove the deleted task from the UI
+            setNoteData((prevNoteData) => {
+              const updatedTasks = prevNoteData.Tasks.filter(task => task._id !== taskId);
+              return {...prevNoteData, Tasks: updatedTasks};
+            });
           }
         } catch (error) {
+          console.error("Error deleting Task:", error);
           message.error("Error deleting Task");
-          console.error(error);
-          // Handle errors if the deletion fails
         }
       };
-      console.log(noteData);
       
+
       return (
         <div className="mx-20 mt-10 mb-[28vh]">
           <div className="flex justify-end">
