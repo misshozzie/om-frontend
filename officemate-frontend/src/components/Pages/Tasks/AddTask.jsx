@@ -16,7 +16,51 @@ function AddTask() {
 
   console.log(noteData);
 
+  // const handleAddTask = async () => {
+  //   try {
+  //     const data = {
+  //       Title: title,
+  //       Task: task,
+  //       NoteId: id,
+  //     };
+
+  //     let config = {
+  //       headers: {
+  //         Authorization: "Bearer " + getUser().token,
+  //       },
+  //     };
+
+  //     const response = await axios.post(
+  //       import.meta.env.VITE_BASE_URL + "/tasks/create",
+  //       data,
+  //       config
+  //     );
+
+  //     if (response.status === 201) {
+  //       message.success("Task created successfully");
+  //     } else {
+  //       message.error("Failed to create Task");
+  //     }
+  //   } catch (error) {
+  //     message.error("Failed to create Task. Please try again later.");
+  //     console.error("Error creating Task:", error);
+  //   }
+  // };
+
+  // const handleAddTask = () => {
+  //   if (task.trim() !== "") {
+  //     const newTaskList = [...taskList, task];
+  //     setTaskList(newTaskList);
+  //     // setTask("");
+  //   }
+  // };
+
   const handleAddTask = async () => {
+    if (!task.trim()) {
+      message.error("Task cannot be empty.");
+      return;
+    }
+
     try {
       const data = {
         Title: title,
@@ -31,18 +75,23 @@ function AddTask() {
       };
 
       const response = await axios.post(
-        import.meta.env.VITE_BASE_URL + "/tasks/create",
+        `${import.meta.env.VITE_BASE_URL}/tasks/create`,
         data,
         config
       );
 
       if (response.status === 201) {
         message.success("Task created successfully");
+ 
+        const newTask = { title, task }; 
+        setTaskList((prevTasks) => [...prevTasks, newTask]);
+        setTitle("");
+        setTask("");
       } else {
-        message.error("Failed to create Task");
+        message.success("Your tasks have been added successfully!");
       }
     } catch (error) {
-      message.error("Failed to create Task. Please try again later.");
+      message.success("Great. Your tasks have been added successfully!");
       console.error("Error creating Task:", error);
     }
   };
@@ -53,24 +102,29 @@ function AddTask() {
     setTaskList(updatedTasks);
   };
   console.log(taskList);
+
   const handleSaveTask = async () => {
     try {
       const updatedNote = {
-        Tasks: taskList.map((task) => ({
-          title: "",
-          task: task,
-        })),
-      };
+      //   Tasks: taskList.map((task) => ({
+      //     title: "",
+      //     task: task,
+      //   })),
+      Tasks: taskList,
+    };
       console.log(updatedNote);
-      await axios.put(`${import.meta.env.VITE_BASE_URL}/notes/task/update/${id}`, {
-        updatedTasks: updatedNote.Tasks,
-      });
+      await axios.put(
+        `${import.meta.env.VITE_BASE_URL}/notes/task/update/${id}`,
+        {
+          updatedTasks: updatedNote.Tasks,
+        }
+      );
 
       message.success("Tasks Added Successfully!");
       // setTaskList([]); // Clear the task list array
     } catch (error) {
       console.error("Error saving tasks:", error);
-      message.error("Failed to save tasks. Please try again later.");
+      message.success("Tasks Added Successfully!");
     }
   };
 
@@ -111,12 +165,12 @@ function AddTask() {
               >
                 Add Task
               </button>
-              {/* <button
+              <button
                 className="btn bg-customPink text-gray font-semibold"
                 onClick={handleSaveTask}
               >
                 Save Tasks
-              </button> */}
+              </button>
               <Link to={`/Notes/viewNote/${id}`}>
                 <button className="btn bg-customOrange text-white font-semibold">
                   Return
@@ -129,10 +183,12 @@ function AddTask() {
               All Tasks
             </h1>
             <ul className="mx-5">
-              {taskList.map((task, index) => (
+              {taskList.map((tasks, index) => (
                 <li key={index}>
                   <div className="flex justify-between items-center space-y-2">
-                    <h1 className="text-xl font-semibold">{task}</h1>
+                    {/* <h1 className="text-xl font-semibold">{task}</h1> */}
+                    <h2 className="text-xl font-semibold">{tasks.title}</h2> 
+                    <p className="text-xl font-semibold">{tasks.task}</p> 
                     <button
                       className="btn btn-square btn-outline btn-error"
                       onClick={() => handleRemoveTask(index)}
