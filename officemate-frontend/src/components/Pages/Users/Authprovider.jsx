@@ -20,7 +20,7 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const GoogleProvider = new GoogleAuthProvider();
+  const googleProvider = new GoogleAuthProvider();
 
   const signup = async (user) => {
     try {
@@ -52,7 +52,7 @@ function AuthProvider({ children }) {
 
   const googleSignIn = () => {
     setLoading(true);
-    return signInWithPopup(auth, GoogleProvider);
+    return signInWithPopup(auth, googleProvider);
   };
 
   const logOut = () => {
