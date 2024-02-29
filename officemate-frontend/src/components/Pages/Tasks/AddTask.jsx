@@ -35,7 +35,7 @@ function AddTask() {
       }
     
       const response = await axios.post(
-        "https://officemate-backend.onrender.com/tasks/create",
+        process.env.VITE_BASE_URL + "/tasks/create",
           data,
           config
       );
@@ -67,7 +67,7 @@ function AddTask() {
         })),
       };
       console.log(updatedNote);
-      await axios.put(`https://officemate-backend.onrender.com/notes/task/update/${id}`, {
+      await axios.put(`process.env.VITE_BASE_URL + "/notes/task/update/"${id}`, {
         updatedTasks: updatedNote.Tasks,
       });
 

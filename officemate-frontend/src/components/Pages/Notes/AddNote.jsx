@@ -5,10 +5,10 @@ import { useState } from "react";
 import axios from "axios";
 import addnotes from "../../../assets/styles/addnotes.json";
 import { useContext } from "react";
-import {AuthContext} from "../../../components/Pages/Users/Authprovider";
+import { AuthContext } from "../../../components/Pages/Users/Authprovider";
 
 function AddNote({ setRender, render }) {
-  const {getUser} = useContext(AuthContext);
+  const { getUser } = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState("");
   //const [formState, setFormState] = useState({});
   //const [disabled, setDisabled] = useState(true);
@@ -35,22 +35,22 @@ function AddNote({ setRender, render }) {
         Tasks: [],
       };
       console.log(newNote);
-    
+
       let config = {
         headers: {
-          'Authorization': 'Bearer ' + getUser().token
-        }
-      }
-    
+          Authorization: "Bearer " + getUser().token,
+        },
+      };
+
       const response = await axios.post(
-        "https://officemate-backend.onrender.com/notes/create",
-          newNote,
-          config
+        //"https://officemate-backend.onrender.com/notes/create",
+        process.env.VITE_BASE_URL + "/notes/create",
+        newNote,
+        config
       );
-    
+
       if (response.status === 201) {
         message.success("Note created successfully");
-
       } else {
         message.error("Failed to create note");
       }
