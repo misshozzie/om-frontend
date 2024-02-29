@@ -24,7 +24,7 @@ function Login() {
     
     const fetchAllUsers = async () => {
       try {
-        const response = await axios.get("https://officemate-backend.onrender.com/user/login");
+        const response = await axios.get(process.env.VITE_BASE_URL + "/user/login");
         setAllUser(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
