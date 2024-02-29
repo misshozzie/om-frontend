@@ -12,21 +12,20 @@ import { createContext, useEffect, useState } from "react";
 import { app } from "../../../firebase/firebase.config";
 import axios from "axios";
 
-export const AuthContext = createContext(null);
+export const AuthContext = createContext(null); ; //will be used to share authentication state and function across diff. components
+const auth = getAuth(app); //this is provided by Firebase SDK. and returns an authentication object
 
-const auth = getAuth(app);
-
-function AuthProvider({ children }) {
+function AuthProvider({ children }) {  // responsible for managing the authentication state and providing the authentication context to the rest of the application
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const googleProvider = new GoogleAuthProvider();
+  const googleProvider = new GoogleAuthProvider(); //***** class from the Firebase SDK. This provider will be used for signing in with Google authentication.
 
-  const signup = async (user) => {
+  const signup = async (user) => { // function to sign up a user
     try {
 
-      const data = {...user,role: "user"}
-      const response = await axios.post(import.meta.env.VITE_BASE_URL +"/users/create",data);
+      const data = {...user,role: "user"} //
+      const response = await axios.post(import.meta.env.VITE_BASE_URL +"/users/create",data); // send a POST request to the server
       return response.data;
       // console.log(response.data);
     } catch (error) {
@@ -52,14 +51,14 @@ function AuthProvider({ children }) {
 
   const googleSignIn = () => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider);
+    return signInWithPopup(auth, googleProvider); // ******This function will open a popup window and ask the user to sign in with their Google account.
   };
 
   const logOut = () => {
-    setLoading(true);
-    signOut(auth)
+    setLoading(true);// This function will sign out the user from the application.
+    signOut(auth) // This function will sign out the user from the application.
       .then(() => {
-        localStorage.removeItem("token"); 
+        localStorage.removeItem("token"); // This function will remove the token from the local storage.
         setUser(null);
       })
       .catch((error) => {
@@ -71,7 +70,7 @@ function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => { // This function will listen for the authentication state changes.
       setUser(currentUser);
       setLoading(false);
     });
