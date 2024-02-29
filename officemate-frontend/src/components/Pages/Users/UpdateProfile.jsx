@@ -22,30 +22,30 @@ function UpdateProfile() {
     fetchAllUsers();
   }, []);
 
-  const onFinish = async (values) => {
-    try {
-      const { confirmPassword } = values;
+  const onFinish = async (values) => { // will be called when a certain event happens
+    try { // can perform tasks that take some time to complete, like making network requests
+      const { confirmPassword } = values; // get the confirmPassword value from the form
 
       // Make a PUT request to update the password
-      const response = await axios.put(
-        `${import.meta.env.VITE_BASE_URL}/user/update/${currentUser._id}`,
-        {
+      const response = await axios.put( // send a PUT request to the server
+        `${import.meta.env.VITE_BASE_URL}/user/update/${currentUser._id}`, //
+        { 
           newPassword: confirmPassword,
         }
       );
 
-      console.log("Password update response:", response.data);
+      console.log("Password update response:", response.data); //
 
       // Display success message using Ant Design message component
-      message.success("Password updated successfully");
-    } catch (error) {
+      message.success("Password updated successfully"); 
+    } catch (error) { // handle errors
       console.error("Error updating password:", error);
       // Display error message using Ant Design message component
       message.error("Failed to update password. Please try again later.");
     }
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+  const onFinishFailed = (errorInfo) => { // will be called when a certain event happens
+    console.log("Failed:", errorInfo); // log the error info to the console
   };
 
   return (
@@ -78,14 +78,14 @@ function UpdateProfile() {
             className="mb-4 opacity-50"
           >
             <Input
-              className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-2 rounded-none border-[#434343] text-white font-medium disabled:bg-[#a5a5a5]"
+              className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-2 rounded-none border-customBlue text-white font-medium disabled:bg-[#a5a5a5]"
               placeholder={currentUser?.username}
               disabled
             />
           </Form.Item>
           <Form.Item label="Email" name="email" className="mb-4 opacity-50">
             <Input
-              className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-2 rounded-none border-[#434343] text-white font-medium disabled:bg-[#a5a5a5]"
+              className="py-2 text-center username-input placeholder:text-white bg-[#a5a5a5] border-2 rounded-none border-customBlue text-white font-medium disabled:bg-[#a5a5a5]"
               placeholder={currentUser?.email}
               disabled
             />

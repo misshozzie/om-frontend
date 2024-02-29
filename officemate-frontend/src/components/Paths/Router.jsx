@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
         element: <NavBar />,
       },
       {
-        path: "/updateProfile/:email",
+        path: "/UpdateProfile/:email",
         element: (
           <PrivateRoute>
             <UpdateProfile />
@@ -80,7 +80,7 @@ export const router = createBrowserRouter([
         element: <UpdateNote />,
       },
       {
-        path: "/adminpage",
+        path: "/AdminPage",
         element: <PrivateRoute> <AdminPage /></PrivateRoute>,
       },
     ],

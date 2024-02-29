@@ -10,15 +10,27 @@ const NavBar = ({ username}) => {
 
 
   useEffect(() => {
-    const user = getUser();
-    console.log(user);
-    if ( getUser() ) {
-      navigate(`/widgets`);
+  //   const user = getUser();
+  //   console.log(user);
+  //   if ( getUser() ) {
+  //     navigate(`/widgets`);
+  //   } else {
+  //     console.log("navigating");
+  //     navigate("/login");
+  //   }
+  // }, []);
+
+  (async () => { 
+    console.log("Fetching user data...");
+    const currentUser = await getUser();
+    console.log("Current user:", currentUser);
+    if (!currentUser) {
+      navigate('/login');
     } else {
-      console.log("navigating");
-      navigate("/login");
+      currentUser.role === 'admin' ? navigate('/AdminPage') : navigate(`/UpdateProfile/${currentUser.email}`);
     }
-  }, []);
+  })();
+}, [getUser, navigate]);
   
   const logout = async () => {
     try {
