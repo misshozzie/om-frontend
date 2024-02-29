@@ -81,7 +81,7 @@ function ViewNote(){
               <div className="md:border-r-4 border-b-4">
                 <div className="card-body">
                   <h2 className="text-4xl font-bold">{noteData?.Title}</h2>
-                  <p>{noteData?.Date.split('T')[0]}</p>
+                  <p>{noteData?.Date ? noteData.Date.split('T')[0] : 'Loading date...'}</p>
                   <p className="font-semibold">Description:</p>
                   <p>{noteData?.Description}</p>
                 </div>
