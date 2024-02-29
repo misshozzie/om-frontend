@@ -11,7 +11,7 @@ function UpdateProfile() {
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const response = await axios.get(process.env.VITE_BASE_URL + "/user");
+        const response = await axios.get(import.meta.env.VITE_BASE_URL + "/user");
         const Data = response.data;
         const foundUser = Data.find((u) => u.email === email);
         setCurrentUser(foundUser);
@@ -28,7 +28,7 @@ function UpdateProfile() {
 
       // Make a PUT request to update the password
       const response = await axios.put(
-        `${process.env.VITE_BASE_URL}/user/update/${currentUser._id}`,
+        `${import.meta.env.VITE_BASE_URL}/user/update/${currentUser._id}`,
         {
           newPassword: confirmPassword,
         }

@@ -13,6 +13,7 @@ function AddNote({ setRender, render }) {
   //const [formState, setFormState] = useState({});
   //const [disabled, setDisabled] = useState(true);
   //const [errors, setErrors] = useState({});
+  
 
   const navigate = useNavigate();
 
@@ -44,7 +45,7 @@ function AddNote({ setRender, render }) {
 
       const response = await axios.post(
         //"https://officemate-backend.onrender.com/notes/create",
-        process.env.VITE_BASE_URL + "/notes/create",
+        import.meta.env.VITE_BASE_URL + "/notes/create",
         newNote,
         config
       );

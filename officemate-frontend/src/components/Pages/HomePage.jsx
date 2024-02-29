@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 
 function HomePage() {
@@ -18,6 +18,13 @@ function HomePage() {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
+  useEffect(() => {
+    const intervalId = setInterval(goToNextImage, 3000); 
+
+    return () => clearInterval(intervalId); // 
+  }, [currentImageIndex]); 
+
+
   return (
     <div>
       <div
@@ -29,8 +36,8 @@ function HomePage() {
       {/* Content here */}
     </div>
     <div className="pb-5 text-center"> {/* Added padding-bottom and text-center */}
-      <button className="btn btn-primary mx-2" onClick={goToPrevImage}>Prev</button> {/* Added margin for spacing */}
-      <button className="btn btn-primary mx-2" onClick={goToNextImage}>Next</button>
+      <button className="btn bg-customOrange mx-2 btn-sm " onClick={goToPrevImage}>Prev</button>
+      <button className="btn bg-customOrange mx-2 btn-sm " onClick={goToNextImage}>Next</button>
     </div>
   </div>
 </div>

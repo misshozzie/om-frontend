@@ -19,7 +19,7 @@ function Note() {
         }
       }
       //const response = await axios.get("https://officemate-backend.onrender.com/notes/all",config);
-      const response = await axios.get(process.env.VITE_BASE_URL + "/notes/all", config);
+      const response = await axios.get(import.meta.env.VITE_BASE_URL + "/notes/all", config);
       console.log(response.data);
       setAllNotes(response.data);
     } catch (error) {
@@ -41,7 +41,7 @@ function Note() {
       // Send a DELETE request to the server route with the note ID
       //const response = await axios.delete(`https://officemate-backend.onrender.com/notes/${id}`,config);
       //const response = await axios.delete(`process.env.VITE_BASE_URL + "/notes/"${id}`,config);
-      const response = await axios.delete(`${process.env.VITE_BASE_URL}/notes/${id}`, config);
+      const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/notes/${id}`, config);
 
       if (response.status === 200) {
 
@@ -76,7 +76,7 @@ function Note() {
           >
             <div className="card-body text-center">
               <h2 className="text-xl font-semibold text-black">{note.Title}</h2>
-              <p className="text-black font-medium">{note.Date}</p>
+              <p className="text-black font-medium">{note.Date.split('T')[0]}</p>
               <div className="card-actions justify-center flex-wrap mt-5">
                 <Link to={`/Notes/viewNote/${note._id}`}>
                   <button className="btn bg-customBeige text-black">View</button>

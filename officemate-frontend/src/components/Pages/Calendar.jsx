@@ -21,7 +21,7 @@ function Calendar() {
           'Authorization': 'Bearer ' + getUser().token
         }
       }
-      const res = await axios.get(process.env.VITE_BASE_URL + "/notes/all",config);
+      const res = await axios.get(import.meta.env.VITE_BASE_URL + "/notes/all",config);
 
       if (res) {
         const events = []

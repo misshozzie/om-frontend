@@ -20,7 +20,7 @@ function ViewNote(){
               'Authorization': 'Bearer ' + getUser().token
             }
           }
-          const response = await axios.get(`${process.env.VITE_BASE_URL}/notes/one/${id}`,config);
+          const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/notes/one/${id}`,config);
           console.log(response.data);
           setNoteData(response.data);
         } catch (error) {
@@ -34,7 +34,7 @@ function ViewNote(){
       const handleDeleteBtn = async () => {
         try {
           // Send a DELETE request to the server route with the note ID
-          const response = await axios.delete(`${process.env.VITE_BASE_URL}/notes/${id}`);
+          const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/notes/${id}`);
           if (response.status === 200) {
             // If the deletion is successful, you can perform additional actions if needed
             message.success("Note deleted successfully!");
@@ -53,7 +53,7 @@ function ViewNote(){
         // console.log(taskId);
         try {
           // Send a DELETE request to the server route with the note ID
-          const response = await axios.delete(`${process.env.VITE_BASE_URL}/tasks/${taskId}`);
+          const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/tasks/${taskId}`);
           if (response.status === 200) {
             // If the deletion is successful, you can perform additional actions if needed
             message.success("Task deleted successfully!");
@@ -81,7 +81,7 @@ function ViewNote(){
               <div className="md:border-r-4 border-b-4">
                 <div className="card-body">
                   <h2 className="text-4xl font-bold">{noteData?.Title}</h2>
-                  <p>{noteData?.Date}</p>
+                  <p>{noteData?.Date.split('T')[0]}</p>
                   <p className="font-semibold">Description:</p>
                   <p>{noteData?.Description}</p>
                 </div>
@@ -116,7 +116,7 @@ function ViewNote(){
                       &nbsp;
                       &nbsp;
                       <button
-                      className="btn  btn-circle bg-customOrange text-white text-xs"
+                      className="btn  btn-circle bg-customOrange text-white btn-sm"
                       onClick={() => {handleDeleteTaskBtn(val._id)}}
                       >
                         X

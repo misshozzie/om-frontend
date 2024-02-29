@@ -25,7 +25,7 @@ function UpdateNote() {
           }
         }
         //const response = await axios.get(`https://officemate-backend.onrender.com/notes/one/${id}`,config);
-        const response = await axios.get(`${process.env.VITE_BASE_URL}/notes/one/${id}`,config);
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/notes/one/${id}`,config);
         console.log(response.data);
         setNoteData(response.data);
       } catch (error) {
@@ -57,7 +57,7 @@ function UpdateNote() {
         }
         console.log(data);
         const response = await axios.patch(
-          `${process.env.VITE_BASE_URL}/notes/${id}`,
+          `${import.meta.env.VITE_BASE_URL}/notes/${id}`,
           data,
           config
         );

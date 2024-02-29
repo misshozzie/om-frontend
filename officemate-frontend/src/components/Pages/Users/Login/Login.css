@@ -2,6 +2,7 @@
 	.ant-form-item-label
 	> label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
 	display: none;
+
 }
 .form-label label {
 	color: white !important;
@@ -40,3 +41,12 @@
 .submit-btn:hover {
 	background-color: #45484c !important;
 }
+
+.navbar { 
+	display: block; /* Or flex, or inline-block depending on how you want it laid out */
+  } 
+  
+  /* More specific if needed */
+  #main-header .navbar { 
+	display: block;
+  }
