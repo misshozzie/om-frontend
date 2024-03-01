@@ -11,7 +11,7 @@ The app aims to establish itself as an indispensable tool for time management an
 
 ## Live Demo (Project Version):
 
-Insert gif or link to demo
+- [Officemate Live Demo](https://officemate-frontend.onrender.com/)
 
 
 ## User Stories
@@ -27,6 +27,10 @@ The Officemate Web App user stories include features such as notes and tasks han
 7. As an office worker or student, I want to view changes in my calendar when events are updated or deleted to stay informed about my schedule.
 8. As an office worker or student, I want to view all my created notes and tasks to easily access my information.
 9. As an admin, I want to have the ability to delete user accounts to manage the user base effectively.
+
+### [Journey of Officemate's user (click to watch) ](https://youtu.be/LBx8KGGEEI4)
+
+
 ## Links and References
 
 [WireFrame ](https://www.figma.com/file/ET9Ii01CXhZVMz4KgI4Sbo/Officemate?type=whiteboard&node-id=2%3A2747&t=PkmdOOYLF8m7ZED2-1)
@@ -91,7 +95,7 @@ The Officemate Web App user stories include features such as notes and tasks han
 
 ### Challenges
 
-1. In the backend, I've tried manipulating routes and directly injecting MongoDB and routes into the server. However, I encounter challenges in structuring the backend, especially when dealing with Data Access Objects (DAOs), models, controllers, and related components.
+1. The entire project is challenging for me since my skills are still fresh and need more time to horn. Honestly, I aspire to create more complex apps, such as a beauty web app community featuring forums, blogs, and member chats. However, focusing on projects involving simple CRUD operations is the best approach for me at the moment.
 
 2. Regarding the calendar integration, I'm encountering issues with integrating Google Calendar for Google users. For users who sign up through a standard login, should the calendar remain a basic one, or is it worth considering the addition of cloud saving features? These brainstorming sessions on potential features are proving to be quite time-consuming for the project.
 
