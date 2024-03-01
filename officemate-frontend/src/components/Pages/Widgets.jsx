@@ -52,7 +52,7 @@ function Widgets() {
                 />
               </figure>
               <div className="card-body text-center">
-                <h2 className="text-3xl font-bold italic">PDF Converter</h2>
+                <h2 className="text-3xl font-bold italic">Coming soon</h2>
               </div>
             </div>
           </div>
