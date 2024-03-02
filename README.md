@@ -53,7 +53,7 @@ The Officemate Web App user stories include features such as notes and tasks han
 
 ## Technologies Used
 
-**Client:** React, MongoDB, TailwindCSS: DaisyUI,
+**Client:** React, MongoDB, TailwindCSS: DaisyUI, Firebase Google
 
 **Server:** Node, Express
 
